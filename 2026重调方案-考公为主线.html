@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 重调方案 · 考公为主线</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ec;--bg2:#ebe7df;--card:#fff;
+  --ink:#1c1917;--ink2:#44403c;--ink3:#78716c;--ink4:#a8a29e;
+  --border:rgba(28,25,23,.08);--shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --red:#b91c1c;--red-l:rgba(185,28,28,.07);
+  --gold:#92400e;--gold-l:rgba(146,64,14,.07);
+  --green:#0f766e;--green-l:rgba(15,118,110,.07);
+  --blue:#1e40af;--blue-l:rgba(30,64,175,.07);
+  --plum:#6d28d9;--plum-l:rgba(109,40,217,.07);
+  --orange:#c2410c;--orange-l:rgba(194,65,12,.07);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.8;padding-bottom:60px}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+
+/* Hero */
+.hero{padding:44px 0 32px;text-align:center;border-bottom:2px solid var(--border)}
+.hero-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--red);background:var(--red-l);border:1px solid rgba(185,28,28,.18);padding:3px 14px;border-radius:3px;margin-bottom:12px}
+.hero h1{font-family:'Noto Serif SC',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;line-height:1.3;margin-bottom:6px}
+.hero h1 em{font-style:normal;color:var(--red)}
+.hero-sub{font-size:13px;color:var(--ink3);max-width:500px;margin:0 auto}
+
+/* Section */
+.sec{padding:30px 0;border-bottom:1px solid var(--border)}
+.sec:last-of-type{border-bottom:none}
+.sec-title{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sec-sub{font-size:13px;color:var(--ink3);margin-bottom:18px}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:10px;box-shadow:var(--shadow)}
+.card-t{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card-body{font-size:13px;color:var(--ink2);line-height:1.85}
+.tag{display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:3px}
+.tag-red{background:var(--red-l);color:var(--red)}
+.tag-green{background:var(--green-l);color:var(--green)}
+.tag-gold{background:var(--gold-l);color:var(--gold)}
+.tag-blue{background:var(--blue-l);color:var(--blue)}
+.tag-plum{background:var(--plum-l);color:var(--plum)}
+
+/* Boxes */
+.box{padding:14px 16px;border-radius:var(--r-sm);margin:10px 0;font-size:13px;line-height:1.85}
+.box-red{background:var(--red-l);border-left:3px solid var(--red)}
+.box-green{background:var(--green-l);border-left:3px solid var(--green)}
+.box-gold{background:var(--gold-l);border-left:3px solid var(--gold)}
+.box-blue{background:var(--blue-l);border-left:3px solid var(--blue)}
+.box-plum{background:var(--plum-l);border-left:3px solid var(--plum)}
+
+/* Grid */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.grid2{grid-template-columns:1fr}}
+
+/* Phase bar */
+.phase-strip{display:flex;gap:0;margin:14px 0;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.phase-block{flex:1;padding:10px 6px;text-align:center;font-size:11px;font-weight:700;line-height:1.4}
+.pb-active{background:var(--red);color:#fff}
+.pb-mid{background:var(--gold-l);color:var(--gold)}
+.pb-late{background:var(--plum-l);color:var(--plum)}
+.pb-final{background:var(--green-l);color:var(--green)}
+
+/* Schedule table */
+.sch{width:100%;border-collapse:collapse;font-size:12px;background:var(--card);border-radius:var(--r);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);margin:10px 0}
+.sch th{background:var(--ink);color:#fff;padding:9px 12px;text-align:left;font-size:11px;font-weight:700}
+.sch td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.sch tr:last-child td{border-bottom:none}
+.sch tr:nth-child(even){background:rgba(0,0,0,.015)}
+.sch .t{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);white-space:nowrap;width:100px}
+.sch .dur{font-size:10px;color:var(--ink4);white-space:nowrap;width:40px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;flex-shrink:0}
+
+/* Study plan table */
+.spt{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+.spt th{background:var(--bg2);padding:7px 10px;text-align:left;font-size:11px;font-weight:700;border-bottom:1px solid var(--border)}
+.spt td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--ink2)}
+.spt tr:last-child td{border-bottom:none}
+
+/* Weekly card */
+.week-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:10px;box-shadow:var(--shadow)}
+.week-head{padding:10px 16px;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.week-body{padding:12px 16px}
+.week-row{display:flex;gap:8px;align-items:flex-start;padding:4px 0;font-size:12px;color:var(--ink2);border-bottom:1px dashed rgba(0,0,0,.05)}
+.week-row:last-child{border-bottom:none}
+.week-step{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink4);flex-shrink:0;width:20px;margin-top:1px}
+.week-done{font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px;background:var(--green-l);color:var(--green);flex-shrink:0}
+
+/* Tracker changes */
+.change-row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed rgba(0,0,0,.06);font-size:13px}
+.change-row:last-child{border-bottom:none}
+.change-arrow{font-size:16px;flex-shrink:0;margin-top:1px}
+
+footer{text-align:center;padding:28px;font-size:11px;color:var(--ink4)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-badge">2026 重调方案 · 2026.05 起执行</div>
+  <h1>以<em>考公上岸</em>为主线<br>重构所有任务优先级</h1>
+  <div class="hero-sub">国考12月·省考来年3月 · 距国考约7个月 · 现在是基础建设期，不是冲刺期</div>
+</div>
+
+<!-- ═══ 1. 目标重新定位 ═══ -->
+<div class="sec">
+  <div class="sec-title">🎯 目标层级重新确认</div>
+  <div class="sec-sub">三个目标之间的关系和资源分配</div>
+
+  <div class="grid2">
+    <div class="card" style="border-left:4px solid var(--red)">
+      <div class="card-t">🥇 主线目标 <span class="tag tag-red">80%精力</span></div>
+      <div class="card-body"><b>考上公务员</b><br>国考12月 + 省考来年3月<br>每天上午3.5小时全给考公<br>这是唯一不能压缩的时间块</div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--gold)">
+      <div class="card-t">🥈 次线目标 <span class="tag tag-gold">15%精力</span></div>
+      <div class="card-body"><b>亚马逊稳步增长</b><br>每天下午1小时维护运营<br>Procreate/手工为辅助工具<br>不开发新产品线，守住现有</div>
+    </div>
+  </div>
+  <div class="card" style="border-left:4px solid var(--green)">
+    <div class="card-t">🥉 长期目标 <span class="tag tag-green">5%精力</span></div>
+    <div class="card-body"><b>个人智慧增长 · 多思维模型</b> — 每天晚间30分钟阅读，不强求进度，阅读是放松也是积累。体态15-30分钟晨练，保持精力状态。</div>
+  </div>
+
+  <div class="box box-red" style="margin-top:14px">
+    <b>关于Procreate和手工艺的定位：</b>从「需要每天推进的技能」降级为「周末调剂」。考公期间不设进度目标，不打卡，只要没完全放弃就行。等上岸后再恢复节奏。
+  </div>
+</div>
+
+<!-- ═══ 2. 7个月备考路线图 ═══ -->
+<div class="sec">
+  <div class="sec-title">🗺 7个月备考路线图</div>
+  <div class="sec-sub">5月→12月国考，按学习规律分四个阶段</div>
+
+  <div class="phase-strip">
+    <div class="phase-block pb-active">基础建设<br><span style="font-size:9px;font-weight:400">5-6月</span></div>
+    <div class="phase-block pb-mid">专项突破<br><span style="font-size:9px;font-weight:400">7-8月</span></div>
+    <div class="phase-block pb-late">真题实战<br><span style="font-size:9px;font-weight:400">9-10月</span></div>
+    <div class="phase-block pb-final">冲刺模考<br><span style="font-size:9px;font-weight:400">11-12月</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">📗 第一阶段·基础建设（5-6月，你现在在这里）</div>
+    <div class="card-body">
+      <b>核心任务：把剩余的基础视频课刷完，建立完整知识框架。</b><br><br>
+      行测5大模块要全部过一遍（言语、数量、判断推理、资料分析、常识）。不要跳过你觉得"还可以"的模块——你4月事业编两个都弱，说明基础框架有漏洞。<br><br>
+      申论这阶段只做一件事：<b>搞清楚申论是什么</b>。读懂题型（归纳概括、综合分析、提出对策、公文写作、大作文），知道每种题的答题逻辑。不要急着刷题。<br><br>
+      <b>每天行测：申论 = 2:1</b>（行测120分钟，申论60分钟）。行测是大头，拉分靠行测。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">📘 第二阶段·专项突破（7-8月）</div>
+    <div class="card-body">
+      行测按模块专项刷题，重点攻判断推理（逻辑判断+图形推理）和资料分析——这两块提分空间最大。言语和常识靠积累，数量关系实在太弱就战略放弃（只保证简单题不失分）。<br><br>
+      申论开始大量写：归纳概括和综合分析每周各写2题，对照参考答案拆解得分逻辑。<br><br>
+      <b>每天行测：申论 = 1.5:1</b>（行测90分钟，申论60-70分钟）。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">📙 第三阶段·真题实战（9-10月）</div>
+    <div class="card-body">
+      国考真题从2018年开始做，一天一套行测（限时），一天一套申论（限时），交替进行。重点不是做了多少套，而是每套做完必须<b>对答案+分析错题+归纳规律</b>。<br><br>
+      行测错题要二刷，找出自己的"死穴"（某类题反复错）。<br><br>
+      申论大作文开始练，每周1篇，照着范文结构模仿。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">📕 第四阶段·冲刺模考（11-12月）</div>
+    <div class="card-body">
+      每周2-3套完整模拟（行测110分钟+申论180分钟，严格计时）。查漏补缺，稳定发挥水平。<br><br>
+      考前2周停止学新知识，只做熟悉的题型，保持手感和节奏。<br><br>
+      申论大作文背10-15个高分开头句和结尾句。
+    </div>
+  </div>
+
+  <div class="box box-blue">
+    <b>关于国考和省考同时备考：</b>国考和省考的行测几乎完全通用，申论有细微差异（国考更宏观，省考更接地气）。建议以国考为主线备考，12月国考后利用1-3月时间针对省考做申论微调。不需要两套备考体系。
+  </div>
+</div>
+
+<!-- ═══ 3. 每日时间表 ═══ -->
+<div class="sec">
+  <div class="sec-title">⏰ 每日时间表（工作日）</div>
+  <div class="sec-sub">根据你的可用时间段重新排布，考公占上午全部</div>
+
+  <table class="sch">
+    <tr><th>时段</th><th>时长</th><th>任务</th><th>说明</th></tr>
+    <tr>
+      <td class="t">06:30–07:00</td><td class="dur">30m</td>
+      <td><span class="dot" style="background:var(--red)"></span><b>体态晨练</b></td>
+      <td style="font-size:11px;color:var(--ink3)">雷打不动，是一天的启动仪式</td>
+    </tr>
+    <tr>
+      <td class="t">08:30–09:00</td><td class="dur">30m</td>
+      <td><span class="dot" style="background:var(--blue)"></span><b>行测热身</b></td>
+      <td style="font-size:11px;color:var(--ink3)">做10-15道练手题，进入备考状态</td>
+    </tr>
+    <tr>
+      <td class="t">09:00–11:00</td><td class="dur">2h</td>
+      <td><span class="dot" style="background:var(--blue)"></span><b>行测主攻</b></td>
+      <td style="font-size:11px;color:var(--ink3)">视频课或专项刷题（按当前阶段）</td>
+    </tr>
+    <tr>
+      <td class="t">11:00–12:00</td><td class="dur">1h</td>
+      <td><span class="dot" style="background:var(--plum)"></span><b>申论学习</b></td>
+      <td style="font-size:11px;color:var(--ink3)">按下方申论每日清单执行</td>
+    </tr>
+    <tr style="background:rgba(0,0,0,.02)">
+      <td class="t">12:00–13:00</td><td class="dur">1h</td>
+      <td>午休 / 自由时间</td>
+      <td style="font-size:11px;color:var(--ink3)">保护午休，下午才有效率</td>
+    </tr>
+    <tr>
+      <td class="t">13:00–14:00</td><td class="dur">1h</td>
+      <td><span class="dot" style="background:var(--gold)"></span><b>亚马逊</b></td>
+      <td style="font-size:11px;color:var(--ink3)">订单+广告+选品，固定1小时不超</td>
+    </tr>
+    <tr>
+      <td class="t">14:00–15:30</td><td class="dur">1.5h</td>
+      <td><span class="dot" style="background:var(--blue)"></span><b>行测错题/复盘</b></td>
+      <td style="font-size:11px;color:var(--ink3)">上午做的题对答案、分析错因</td>
+    </tr>
+    <tr>
+      <td class="t">15:30–16:00</td><td class="dur">30m</td>
+      <td><span class="dot" style="background:var(--plum)"></span><b>申论素材积累</b></td>
+      <td style="font-size:11px;color:var(--ink3)">执行每日申论清单中的积累任务</td>
+    </tr>
+    <tr>
+      <td class="t">晚间</td><td class="dur">30m</td>
+      <td><span class="dot" style="background:var(--green)"></span><b>阅读</b></td>
+      <td style="font-size:11px;color:var(--ink3)">按原阅读清单，睡前放松，不强求</td>
+    </tr>
+  </table>
+
+  <div class="box box-gold">
+    <b>周末安排：</b>上午2小时考公（以申论大题或行测套题为主）+ Procreate/手工调剂1小时（不打卡不设目标）+ 晚间阅读30分钟。周日留30分钟做本周复盘。
+  </div>
+
+  <div class="box box-green">
+    <b>每天实际考公时间：</b>上午3.5小时（行测2.5h+申论1h）+ 下午错题复盘1.5h + 申论积累30分钟 = <b>共5.5小时</b>。比你说的4小时多，但这才是真正能拉开差距的投入量。
+  </div>
+</div>
+
+<!-- ═══ 4. 行测学习系统 ═══ -->
+<div class="sec">
+  <div class="sec-title">📐 行测学习系统（5-6月基础期）</div>
+  <div class="sec-sub">两个都弱的情况下，按这个顺序推进，不要齐头并进</div>
+
+  <table class="spt">
+    <tr><th>学习顺序</th><th>模块</th><th>重要性</th><th>5-6月目标</th></tr>
+    <tr>
+      <td><b>第1优先</b></td>
+      <td>判断推理（逻辑+图形+定义+类比）</td>
+      <td><span class="tag tag-red">必拿</span></td>
+      <td>完成全部视频课，每类型刷50题</td>
+    </tr>
+    <tr>
+      <td><b>第2优先</b></td>
+      <td>资料分析</td>
+      <td><span class="tag tag-red">必拿</span></td>
+      <td>完成视频课，练速算技巧，每天10题</td>
+    </tr>
+    <tr>
+      <td><b>第3优先</b></td>
+      <td>言语理解</td>
+      <td><span class="tag tag-gold">重要</span></td>
+      <td>每天10题保持语感，不专项死磕</td>
+    </tr>
+    <tr>
+      <td><b>第4优先</b></td>
+      <td>常识判断</td>
+      <td><span class="tag tag-green">积累</span></td>
+      <td>不单独学，靠申论素材积累自然覆盖</td>
+    </tr>
+    <tr>
+      <td><b>第5优先</b></td>
+      <td>数量关系</td>
+      <td><span class="tag tag-blue">按能力定</span></td>
+      <td>先完成视频课评估，若提分难就战略放弃</td>
+    </tr>
+  </table>
+
+  <div class="box box-red">
+    <b>为什么判断推理和资料分析排第一？</b><br>
+    这两块题量合计占行测的40%以上，且有明确的解题套路——学会方法就能稳定拿分。言语靠语感，常识靠积累，数量关系难度高投入产出低。在时间有限的情况下，集中攻有套路可学的模块，是最理性的策略。
+  </div>
+
+  <div class="card">
+    <div class="card-t">每日行测节奏（基础期）</div>
+    <div class="card-body">
+      <b>08:30-09:00 热身：</b>昨日错题回顾（不做新题，只看错题的正确解法，加深印象）<br>
+      <b>09:00-10:00 视频课：</b>新知识点，边看边做例题，记笔记（一个知识点看完马上做5题验证）<br>
+      <b>10:00-11:00 刷题：</b>当天学的知识点专项刷题20-30题，限时<br>
+      <b>14:00-15:30 复盘：</b>对答案，错题分类（知识漏洞/粗心/题型不熟），写错题本<br><br>
+      <b>⚠️ 错题本必须要建：</b>不是抄题，只记「为什么错+正确逻辑是什么+下次遇到怎么做」。这三行字就够了。
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 5. 申论系统 ═══ -->
+<div class="sec">
+  <div class="sec-title">✍️ 申论学习系统（完整版）</div>
+  <div class="sec-sub">在你提交的每日清单基础上，加入基础框架和进阶路径</div>
+
+  <div class="box box-red">
+    <b>先说一个重要判断：</b>你提交的那份每日申论清单（周一画结构、周二结构日…）设计得很精巧，但它是<b>申论素材积累系统</b>，适合已经理解申论答题逻辑之后用。如果现在直接上，容易积累了很多素材却不知道怎么转化成分数。<br><br>
+    所以这个月先做一件事：<b>搞清楚申论答题的底层逻辑</b>，然后再让那份清单发挥最大价值。
+  </div>
+
+  <div class="card">
+    <div class="card-t">申论底层逻辑（5月必须搞清楚的）</div>
+    <div class="card-body">
+      申论的本质是：<b>从给定材料中找信息，用官方语言组织表达</b>。不是考你的观点，不是考你的文采，是考你能不能从材料里提取关键信息并准确表达。<br><br>
+      <b>五种题型的答题逻辑：</b><br><br>
+      <b>① 归纳概括</b>（"请概括…的问题/原因/影响"）→ 答案全在材料里，逐段划关键词，合并同类项，分条列出。字数够就行，不用展开。<br><br>
+      <b>② 综合分析</b>（"请分析…的内涵/请谈谈对…的理解"）→ 提出观点+解释说明+举例支撑+总结。观点从材料来，不要自己发挥。<br><br>
+      <b>③ 提出对策</b>（"请提出解决…问题的建议"）→ 问题从材料里找，对策也从材料里找（材料往往已经暗示了做法），组织成"针对XX问题，建议XX"的格式。<br><br>
+      <b>④ 公文写作</b>（写报告/通知/方案）→ 格式分不能丢（标题/主送机关/正文/落款），内容从材料来。<br><br>
+      <b>⑤ 大作文</b>（800-1000字议论文）→ 论点从材料来，用"提出问题→分析问题→解决问题"三段式，每段有分论点+论据+总结。<br><br>
+      <b>本月目标：把真题（近3年国考申论卷）的答案拿来，逐题拆解它从哪段材料提取了什么信息，怎么组织的。</b>不是做题，是拆答案。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">修订后的申论每日清单（整合版）</div>
+    <div class="card-body">
+      把你原来的7天清单做了整合，上午11:00-12:00执行「学习」部分，下午15:30-16:00执行「积累」部分。
+    </div>
+  </div>
+
+  <!-- 周一 -->
+  <div class="week-card">
+    <div class="week-head" style="background:var(--red-l)">
+      <span>周一 · 结构理解日</span>
+      <span class="tag tag-red">学+积累</span>
+    </div>
+    <div class="week-body">
+      <div style="font-size:11px;color:var(--ink3);margin-bottom:8px">11:00-12:00 申论学习</div>
+      <div class="week-row"><span class="week-step">①</span><span>拿一道近年真题「归纳概括题」，先不看答案，自己用5分钟划材料关键词</span></div>
+      <div class="week-row"><span class="week-step">②</span><span>对照参考答案，标出：答案从材料哪段来？用了哪些词？删掉了什么？</span></div>
+      <div class="week-row"><span class="week-step">③</span><span>写下"答案组织规律"1句话（如：分条列点、动词开头、不超30字/条）</span></div>
+      <div style="font-size:11px;color:var(--ink3);margin:10px 0 6px">15:30-16:00 申论积累</div>
+      <div class="week-row"><span class="week-step">①</span><span>人民日报App读1篇短评，画出"现象→问题→原因→对策"4段结构</span></div>
+      <div class="week-row"><span class="week-step">②</span><span>记1个今天新看到的政策词/表达（备忘录）</span></div>
+      <div style="margin-top:8px"><span class="week-done">✅ 完成标准</span> <span style="font-size:12px;color:var(--ink2)">写下1句答案组织规律 + 记1个新词</span></div>
+    </div>
+  </div>
+
+  <!-- 周二 -->
+  <div class="week-card">
+    <div class="week-head" style="background:var(--plum-l)">
+      <span>周二 · 结构模板日</span>
+      <span class="tag tag-plum">练+积累</span>
+    </div>
+    <div class="week-body">
+      <div style="font-size:11px;color:var(--ink3);margin-bottom:8px">11:00-12:00 申论学习</div>
+      <div class="week-row"><span class="week-step">①</span><span>从机关文字工作五十讲找1个结构模板（如"是什么—为什么—怎么办"）</span></div>
+      <div class="week-row"><span class="week-step">②</span><span>用这个模板，套写昨天那道真题材料的话题，写3句话大纲</span></div>
+      <div class="week-row"><span class="week-step">③</span><span>念出声，感受语感是否通顺</span></div>
+      <div style="font-size:11px;color:var(--ink3);margin:10px 0 6px">15:30-16:00 申论积累</div>
+      <div class="week-row"><span class="week-step">①</span><span>半月谈选1篇基层报道，标出：问题+做法+结果</span></div>
+      <div class="week-row"><span class="week-step">②</span><span>把"做法"提炼成1句对策格式："针对XX，采取XX，实现XX"</span></div>
+      <div style="margin-top:8px"><span class="week-done">✅ 完成标准</span> <span style="font-size:12px;color:var(--ink2)">写出3句话大纲 + 1句对策</span></div>
+    </div>
+  </div>
+
+  <!-- 周三 -->
+  <div class="week-card">
+    <div class="week-head" style="background:var(--gold-l)">
+      <span>周三 · 素材压缩日</span>
+      <span class="tag tag-gold">积累+迁移</span>
+    </div>
+    <div class="week-body">
+      <div style="font-size:11px;color:var(--ink3);margin-bottom:8px">11:00-12:00 申论学习</div>
+      <div class="week-row"><span class="week-step">①</span><span>拿一道「综合分析题」真题，看参考答案，标出：总论点在哪里？分析逻辑是什么？</span></div>
+      <div class="week-row"><span class="week-step">②</span><span>自己仿写一个"提出观点+1个理由+1个例子"的100字片段</span></div>
+      <div style="font-size:11px;color:var(--ink3);margin:10px 0 6px">15:30-16:00 申论积累</div>
+      <div class="week-row"><span class="week-step">①</span><span>从本周看过的材料里选1个话题，压缩成100字"面试可讲素材"</span></div>
+      <div class="week-row"><span class="week-step">②</span><span>问自己：这个案例还能用在哪些申论话题？写2个关键词</span></div>
+      <div style="margin-top:8px"><span class="week-done">✅ 完成标准</span> <span style="font-size:12px;color:var(--ink2)">仿写100字 + 1段素材</span></div>
+    </div>
+  </div>
+
+  <!-- 周四 -->
+  <div class="week-card">
+    <div class="week-head" style="background:var(--blue-l)">
+      <span>周四 · 语言打磨日</span>
+      <span class="tag tag-blue">表达+金句</span>
+    </div>
+    <div class="week-body">
+      <div style="font-size:11px;color:var(--ink3);margin-bottom:8px">11:00-12:00 申论学习</div>
+      <div class="week-row"><span class="week-step">①</span><span>找本周申论学习中你写出的最差的1句话</span></div>
+      <div class="week-row"><span class="week-step">②</span><span>对照参考答案，把这句话改成官方表达风格（动词精准、去口语、加限定词）</span></div>
+      <div class="week-row"><span class="week-step">③</span><span>改写前后对比，写下"这次改了什么"1句话</span></div>
+      <div style="font-size:11px;color:var(--ink3);margin:10px 0 6px">15:30-16:00 申论积累</div>
+      <div class="week-row"><span class="week-step">①</span><span>人民日报划3个你写不出的表达</span></div>
+      <div class="week-row"><span class="week-step">②</span><span>造1个"万能开头句"，手写3遍</span></div>
+      <div style="margin-top:8px"><span class="week-done">✅ 完成标准</span> <span style="font-size:12px;color:var(--ink2)">改了1句话 + 手上有1个万能开头</span></div>
+    </div>
+  </div>
+
+  <!-- 周五 -->
+  <div class="week-card">
+    <div class="week-head" style="background:var(--green-l)">
+      <span>周五 · 输出检验日</span>
+      <span class="tag tag-green">写+查+改</span>
+    </div>
+    <div class="week-body">
+      <div style="font-size:11px;color:var(--ink3);margin-bottom:8px">11:00-12:00 申论写作</div>
+      <div class="week-row"><span class="week-step">①</span><span>从本周材料里选1个话题，写200字"微申论"：定性→原因→做法，不写结尾</span></div>
+      <div class="week-row"><span class="week-step">②</span><span>对照机关五十讲检查：用了哪个结构？改掉2个口语词</span></div>
+      <div style="font-size:11px;color:var(--ink3);margin:10px 0 6px">15:30-16:00 申论积累</div>
+      <div class="week-row"><span class="week-step">①</span><span>把本周写过的所有"1句话"总结读一遍</span></div>
+      <div class="week-row"><span class="week-step">②</span><span>选出本周最好的1句表达，写进"金句本"</span></div>
+      <div style="margin-top:8px"><span class="week-done">✅ 完成标准</span> <span style="font-size:12px;color:var(--ink2)">200字段落写出来</span></div>
+    </div>
+  </div>
+
+  <!-- 周六周日 -->
+  <div class="week-card">
+    <div class="week-head" style="background:var(--bg2)">
+      <span>周六 · 理解深化 / 周日 · 复盘休息</span>
+    </div>
+    <div class="week-body">
+      <div style="font-size:12px;color:var(--ink2);line-height:1.8">
+        <b>周六（推荐做）：</b>读《置身事内》10页，边读边问"这个逻辑能解释本周哪个案例"，写1句"原来如此"。这本书是申论理解政府逻辑的最佳辅助，不是可选项，是必读。<br><br>
+        <b>周日：</b>轻松版——读本周所有"1句话总结"（10分钟）。标准版——补做本周没完成的一天。进阶版（7月后）——用本周素材答1道真题申论小题。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 6. 打卡系统更新 ═══ -->
+<div class="sec">
+  <div class="sec-title">📋 打卡系统更新说明</div>
+  <div class="sec-sub">启动台需要做的调整</div>
+
+  <div class="card">
+    <div class="card-t">任务线变化</div>
+    <div class="card-body">
+      <div class="change-row"><span class="change-arrow">🔴</span><div><b>考公（原：阶段B 3h）→ 升级为主线，每天上午3.5h</b><br><span style="font-size:12px;color:var(--ink3)">分拆为「行测」和「申论」两个打卡项，分别记录时间</span></div></div>
+      <div class="change-row"><span class="change-arrow">🟡</span><div><b>亚马逊（不变）→ 每天1小时</b><br><span style="font-size:12px;color:var(--ink3)">维持现状，不扩张，守住运营</span></div></div>
+      <div class="change-row"><span class="change-arrow">🟢</span><div><b>体态（不变）→ 每天15-30分钟晨练</b><br><span style="font-size:12px;color:var(--ink3)">仍是必做项，是精力管理的基础</span></div></div>
+      <div class="change-row"><span class="change-arrow">🔵</span><div><b>阅读（缩减）→ 每天30分钟</b><br><span style="font-size:12px;color:var(--ink3)">从1.5小时降为30分钟，以《置身事内》为主，兼顾申论积累</span></div></div>
+      <div class="change-row"><span class="change-arrow">⚫</span><div><b>Procreate / 羊毛毡（暂停打卡）</b><br><span style="font-size:12px;color:var(--ink3)">从每日必做降级为「周末调剂」，不设目标，不打卡，有做就好</span></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">里程碑更新</div>
+    <div class="card-body">
+      <b>新增核心里程碑：</b><br>
+      · 基础视频课全部刷完（目标：6月底）<br>
+      · 行测判断推理专项刷题200题（目标：6月底）<br>
+      · 资料分析专项刷题100题（目标：6月底）<br>
+      · 申论真题拆解10套（目标：7月底）<br>
+      · 完成2018-2023年国考真题6套（目标：10月底）<br>
+      · 申论大作文写10篇（目标：11月底）<br><br>
+      <b>暂停/降级的里程碑：</b><br>
+      · Procreate完成70课 → 暂停<br>
+      · 批量生产毛毡50件 → 取消<br>
+      · 圣诞设计稿5-8张 → 降级为「尽力而为」
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 7. 一句话 ═══ -->
+<div class="sec" style="border-bottom:none">
+  <div class="box box-green" style="text-align:center;padding:20px 24px">
+    <div style="font-family:'Noto Serif SC',serif;font-size:17px;font-weight:700;margin-bottom:8px">关于这次目标重调</div>
+    <div style="font-size:13px;color:var(--ink2);line-height:1.9;max-width:520px;margin:0 auto">
+      你在穷查理宝典里自己写下了最重要的一句话：<b>「人只有一双手，只能握紧少数的几样东西」</b>。<br><br>
+      这次把考公确立为主线，正是把这个认知付诸实践。7个月后的12月，你只需要回答一个问题：<b>我有没有给这件最重要的事足够的时间和足够专注的精力？</b><br><br>
+      Procreate会等你，毛毡会等你，亚马逊的新品也会等你。但考公的窗口每年只有一次。
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>2026重调方案 · 考公为主线 · 5月起执行 · 每月底做一次阶段复盘</footer>
+</body>
+</html>

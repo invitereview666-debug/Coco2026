@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>手工艺精通指南 · 从小白到品牌创业者</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1612;
+  --ink-2: #3d342c;
+  --ink-3: #6b5e52;
+  --ink-4: #a89585;
+  --paper: #faf7f2;
+  --paper-2: #f2ece2;
+  --paper-3: #e8dfd0;
+  --red: #c0392b;
+  --red-light: #f9e8e6;
+  --green: #2d6a4f;
+  --green-light: #e8f5ee;
+  --gold: #b8860b;
+  --gold-light: #fdf3d0;
+  --teal: #1a6b6b;
+  --teal-light: #e0f2f2;
+  --rose: #8b3a52;
+  --rose-light: #f5e6eb;
+  --accent: #c0392b;
+  --serif: 'Noto Serif SC', Georgia, serif;
+  --sans: 'Noto Sans SC', sans-serif;
+  --mono: 'DM Mono', monospace;
+  --radius: 4px;
+  --radius-lg: 10px;
+  --shadow: 0 2px 20px rgba(26,22,18,0.08);
+  --shadow-lg: 0 8px 40px rgba(26,22,18,0.14);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+nav::-webkit-scrollbar { display: none; }
+.nav-brand {
+  font-family: var(--serif);
+  color: var(--paper);
+  font-size: 13px;
+  white-space: nowrap;
+  padding: 14px 20px 14px 0;
+  border-right: 1px solid rgba(255,255,255,0.12);
+  margin-right: 8px;
+  letter-spacing: 0.04em;
+}
+nav a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 12px;
+  padding: 14px 14px;
+  white-space: nowrap;
+  transition: color 0.2s;
+  letter-spacing: 0.03em;
+}
+nav a:hover, nav a.active { color: #fff; }
+nav a.active { border-bottom: 2px solid var(--accent); }
+
+/* ─── HERO ─── */
+.hero {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 5rem 2rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(192,57,43,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-family: var(--mono);
+  margin-bottom: 1.2rem;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.hero-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.55);
+  max-width: 540px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+.hero-pills {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.pill {
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7);
+  font-family: var(--mono);
+}
+
+/* ─── PROGRESS TRACKER ─── */
+.progress-section {
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--paper-3);
+  padding: 2rem;
+}
+.progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.progress-header h2 {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 600;
+}
+.save-note {
+  font-size: 11px;
+  color: var(--ink-3);
+  font-family: var(--mono);
+}
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.skill-tracker {
+  background: var(--paper);
+  border: 1px solid var(--paper-3);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+}
+.skill-tracker-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.skill-name {
+  font-size: 13px;
+  font-weight: 500;
+}
+.skill-level {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--ink-3);
+}
+.progress-bar {
+  height: 5px;
+  background: var(--paper-3);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.milestones-mini {
+  display: flex;
+  gap: 5px;
+}
+.ms-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--paper-3);
+  background: var(--paper-2);
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-4);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--mono);
+}
+.ms-dot.done {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+.ms-dot:hover { transform: scale(1.15); }
+
+/* ─── MAIN LAYOUT ─── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ─── CHAPTER ─── */
+.chapter {
+  padding: 4rem 0 3rem;
+  border-bottom: 1px solid var(--paper-3);
+}
+.chapter:last-child { border-bottom: none; }
+.chapter-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  font-family: var(--mono);
+  margin-bottom: 0.5rem;
+}
+.chapter-title {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+.chapter-desc {
+  color: var(--ink-3);
+  font-size: 14px;
+  max-width: 560px;
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+
+/* ─── CRAFT HEADER STRIP ─── */
+.craft-strip {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.5rem;
+}
+.craft-num {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 500;
+  opacity: 0.3;
+  line-height: 1;
+}
+.craft-info h3 {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+}
+.craft-info p {
+  font-size: 12px;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+
+/* ─── PHASE TIMELINE ─── */
+.phase-timeline {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 2rem;
+}
+.phase-card {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 0;
+  border: 1px solid var(--paper-3);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--paper);
+}
+.phase-time {
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.phase-month {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  opacity: 0.7;
+}
+.phase-weeks {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.phase-body {
+  padding: 16px 20px;
+  border-left: 1px solid var(--paper-3);
+}
+.phase-name {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.phase-tasks {
+  list-style: none;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+.phase-tasks li {
+  padding: 2px 0;
+  padding-left: 14px;
+  position: relative;
+}
+.phase-tasks li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  opacity: 0.4;
+  font-size: 10px;
+  top: 4px;
+}
+.phase-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-family: var(--mono);
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-top: 8px;
+}
+
+/* ─── RESOURCE CARDS ─── */
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+.resource-card {
+  background: var(--paper);
+  border: 1px solid var(--paper-3);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.resource-card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+}
+.resource-type {
+  font-size: 9px;
+  font-family: var(--mono);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.resource-name {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  font-family: var(--serif);
+}
+.resource-desc {
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+.resource-tags {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.rtag {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-family: var(--mono);
+}
+
+/* ─── TECHNIQUE TABLE ─── */
+.technique-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 2rem;
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--paper-3);
+}
+.technique-table th {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 11px;
+  font-family: var(--mono);
+  letter-spacing: 0.06em;
+  font-weight: 400;
+}
+.technique-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--paper-3);
+  vertical-align: top;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.technique-table tr:last-child td { border-bottom: none; }
+.technique-table tr:hover td { background: var(--paper-2); }
+.diff-dots { letter-spacing: 2px; font-size: 12px; }
+
+/* ─── COLOR SYSTEM ─── */
+.color-section {
+  margin-bottom: 2rem;
+}
+.palette-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.swatch-group {
+  flex: 1;
+  min-width: 180px;
+}
+.swatch-label {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--ink-3);
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+.swatches {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+}
+.swatch {
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.swatch:hover { transform: scale(1.08); }
+.swatch-name {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  white-space: nowrap;
+  color: var(--ink-3);
+  font-family: var(--mono);
+}
+.palette-card {
+  background: var(--paper);
+  border: 1px solid var(--paper-3);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.palette-name {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-family: var(--serif);
+}
+.palette-desc {
+  font-size: 12px;
+  color: var(--ink-3);
+  margin-bottom: 10px;
+}
+.palette-chips {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.chip {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  position: relative;
+}
+.chip-label {
+  font-size: 9px;
+  color: var(--ink-3);
+  font-family: var(--mono);
+  margin-top: 2px;
+  text-align: center;
+}
+.chip-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.palette-tag {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-family: var(--mono);
+  margin-left: auto;
+}
+
+/* ─── DESIGN PRINCIPLES ─── */
+.principle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+.principle-card {
+  border: 1px solid var(--paper-3);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  background: var(--paper);
+}
+.principle-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.principle-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  font-family: var(--serif);
+}
+.principle-desc {
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+/* ─── CHECKLIST ─── */
+.checklist {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 13px;
+  border-bottom: 1px solid var(--paper-3);
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li:hover { background: var(--paper-2); }
+.checklist li.checked {
+  text-decoration: line-through;
+  color: var(--ink-4);
+}
+.check-box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--paper-3);
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  transition: all 0.2s;
+  font-size: 10px;
+}
+.checked .check-box {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+
+/* ─── AMAZON CALENDAR ─── */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  margin-bottom: 2rem;
+}
+.cal-month {
+  border-radius: var(--radius-lg);
+  padding: 14px 12px;
+  border: 1px solid var(--paper-3);
+}
+.cal-month-name {
+  font-size: 11px;
+  font-family: var(--mono);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.cal-month-task {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+.cal-urgent { border-color: #c0392b; background: #fdf0ee; }
+.cal-warm { border-color: #b8860b; background: var(--gold-light); }
+.cal-normal { background: var(--paper); }
+
+/* ─── TOOL KIT TABLE ─── */
+.tool-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+@media(max-width: 560px) {
+  .tool-section { grid-template-columns: 1fr; }
+  .phase-card { grid-template-columns: 1fr; }
+  .phase-body { border-left: none; border-top: 1px solid var(--paper-3); }
+}
+.tool-card {
+  background: var(--paper);
+  border: 1px solid var(--paper-3);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.tool-card-head {
+  padding: 10px 14px;
+  font-size: 11px;
+  font-family: var(--mono);
+  letter-spacing: 0.08em;
+}
+.tool-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 14px;
+  border-top: 1px solid var(--paper-3);
+  gap: 12px;
+}
+.tool-name { font-size: 13px; font-weight: 500; }
+.tool-note { font-size: 11px; color: var(--ink-3); margin-top: 1px; }
+.tool-price {
+  font-family: var(--mono);
+  font-size: 12px;
+  white-space: nowrap;
+  color: var(--green);
+}
+
+/* ─── INSIGHT BOXES ─── */
+.insight {
+  border-left: 3px solid var(--accent);
+  padding: 14px 18px;
+  margin: 1.5rem 0;
+  background: var(--red-light);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+.insight strong { color: var(--red); }
+.insight-green {
+  border-color: var(--green);
+  background: var(--green-light);
+}
+.insight-green strong { color: var(--green); }
+.insight-gold {
+  border-color: var(--gold);
+  background: var(--gold-light);
+}
+.insight-gold strong { color: var(--gold); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--ink);
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+  padding: 2rem;
+  font-size: 12px;
+  font-family: var(--mono);
+}
+
+/* ─── SECTION DIVIDER ─── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2.5rem 0 1.5rem;
+}
+.divider-line { flex: 1; height: 1px; background: var(--paper-3); }
+.divider-label {
+  font-size: 10px;
+  font-family: var(--mono);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+/* ─── NEEDLE GUIDE ─── */
+.needle-guide {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+.needle-card {
+  background: var(--paper);
+  border: 1px solid var(--paper-3);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  text-align: center;
+}
+.needle-num {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.needle-use {
+  font-size: 11px;
+  color: var(--ink-3);
+  line-height: 1.4;
+}
+
+/* ─── WOOL GUIDE ─── */
+.wool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+.wool-card {
+  border: 1px solid var(--paper-3);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--paper);
+}
+.wool-color-bar { height: 6px; }
+.wool-body { padding: 12px 14px; }
+.wool-name { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+.wool-desc { font-size: 11px; color: var(--ink-3); line-height: 1.5; }
+
+/* ─── SCROLL PROGRESS ─── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: var(--accent);
+  z-index: 999;
+  transition: width 0.1s;
+}
+
+/* ─── ACCORDION ─── */
+.accordion { margin-bottom: 1rem; }
+.accordion-trigger {
+  width: 100%;
+  text-align: left;
+  background: var(--paper-2);
+  border: 1px solid var(--paper-3);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--sans);
+  color: var(--ink);
+  transition: background 0.15s;
+}
+.accordion-trigger:hover { background: var(--paper-3); }
+.accordion-trigger span { font-family: var(--mono); font-size: 16px; }
+.accordion-body {
+  display: none;
+  padding: 14px 16px;
+  border: 1px solid var(--paper-3);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  font-size: 13px;
+  color: var(--ink-3);
+  line-height: 1.65;
+  background: var(--paper);
+}
+.accordion-body.open { display: block; }
+
+/* Print styles */
+@media print {
+  nav, .scroll-progress { display: none; }
+  .chapter { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<nav>
+  <div class="nav-brand">手工艺精通指南</div>
+  <a href="#overview" class="active">概览</a>
+  <a href="#felting">羊毛毡</a>
+  <a href="#crochet">钩织</a>
+  <a href="#sewing">缝纫</a>
+  <a href="#embroidery">刺绣</a>
+  <a href="#colortheory">配色设计</a>
+  <a href="#amazon">亚马逊销售</a>
+  <a href="#tracker">进度追踪</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-eyebrow">完整学习手册 · 2025–2026版</div>
+  <h1>从小白到手工艺<br>品牌创业者</h1>
+  <p class="hero-sub">羊毛毡 · 钩织 · 缝纫 · 刺绣｜含学习资源、配色系统、亚马逊圣诞品备货全攻略</p>
+  <div class="hero-pills">
+    <span class="pill">可量化里程碑</span>
+    <span class="pill">配套学习资源</span>
+    <span class="pill">圣诞品选品分析</span>
+    <span class="pill">配色设计系统</span>
+    <span class="pill">进度自我追踪</span>
+  </div>
+</div>
+
+<!-- ─── PROGRESS TRACKER ─── -->
+<div class="progress-section" id="tracker">
+  <div class="container">
+    <div class="progress-header">
+      <h2>我的学习进度</h2>
+      <span class="save-note">※ 点击小圆点标记完成 · 数据保存在浏览器</span>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-tracker">
+        <div class="skill-tracker-head">
+          <span class="skill-name" style="color:#b8860b">羊毛毡</span>
+          <span class="skill-level" id="felt-level">入门</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="felt-bar" style="width:0%;background:#b8860b"></div></div>
+        <div class="milestones-mini" id="felt-ms">
+          <div class="ms-dot" onclick="toggleMS('felt',0,5)">W1</div>
+          <div class="ms-dot" onclick="toggleMS('felt',1,5)">W2</div>
+          <div class="ms-dot" onclick="toggleMS('felt',2,5)">M1</div>
+          <div class="ms-dot" onclick="toggleMS('felt',3,5)">M2</div>
+          <div class="ms-dot" onclick="toggleMS('felt',4,5)">M3</div>
+        </div>
+      </div>
+      <div class="skill-tracker">
+        <div class="skill-tracker-head">
+          <span class="skill-name" style="color:#8b3a52">钩织</span>
+          <span class="skill-level" id="crochet-level">未开始</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="crochet-bar" style="width:0%;background:#8b3a52"></div></div>
+        <div class="milestones-mini" id="crochet-ms">
+          <div class="ms-dot" onclick="toggleMS('crochet',0,5)">W1</div>
+          <div class="ms-dot" onclick="toggleMS('crochet',1,5)">W2</div>
+          <div class="ms-dot" onclick="toggleMS('crochet',2,5)">M1</div>
+          <div class="ms-dot" onclick="toggleMS('crochet',3,5)">M2</div>
+          <div class="ms-dot" onclick="toggleMS('crochet',4,5)">M3</div>
+        </div>
+      </div>
+      <div class="skill-tracker">
+        <div class="skill-tracker-head">
+          <span class="skill-name" style="color:#2d6a4f">缝纫</span>
+          <span class="skill-level" id="sewing-level">未开始</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="sewing-bar" style="width:0%;background:#2d6a4f"></div></div>
+        <div class="milestones-mini" id="sewing-ms">
+          <div class="ms-dot" onclick="toggleMS('sewing',0,5)">W1</div>
+          <div class="ms-dot" onclick="toggleMS('sewing',1,5)">W2</div>
+          <div class="ms-dot" onclick="toggleMS('sewing',2,5)">M1</div>
+          <div class="ms-dot" onclick="toggleMS('sewing',3,5)">M2</div>
+          <div class="ms-dot" onclick="toggleMS('sewing',4,5)">M3</div>
+        </div>
+      </div>
+      <div class="skill-tracker">
+        <div class="skill-tracker-head">
+          <span class="skill-name" style="color:#1a6b6b">刺绣</span>
+          <span class="skill-level" id="embroidery-level">未开始</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="embroidery-bar" style="width:0%;background:#1a6b6b"></div></div>
+        <div class="milestones-mini" id="embroidery-ms">
+          <div class="ms-dot" onclick="toggleMS('embroidery',0,5)">W1</div>
+          <div class="ms-dot" onclick="toggleMS('embroidery',1,5)">W2</div>
+          <div class="ms-dot" onclick="toggleMS('embroidery',2,5)">M1</div>
+          <div class="ms-dot" onclick="toggleMS('embroidery',3,5)">M2</div>
+          <div class="ms-dot" onclick="toggleMS('embroidery',4,5)">M3</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CHAPTER 1: FELTING ─── -->
+<div class="chapter" id="felting">
+  <div class="container">
+    <div class="chapter-label">第一技艺 · 优先学习</div>
+    <h2 class="chapter-title">羊毛毡 Needle Felting</h2>
+    <p class="chapter-desc">最快出成品的手工艺，容错率高，材料成本极低。从平面到立体循序渐进，3个月内可达可销售水准。</p>
+
+    <!-- Craft strip -->
+    <div class="craft-strip" style="background:#fdf3d0;border:1px solid #e6c84a">
+      <div class="craft-num" style="color:#b8860b">01</div>
+      <div class="craft-info">
+        <h3 style="color:#633806">戳针毡技法全路径</h3>
+        <p style="color:#854F0B">月1–3集中学习 · 圣诞季主力产品技艺</p>
+      </div>
+    </div>
+
+    <!-- Phase timeline -->
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">学习阶段</div><div class="divider-line"></div></div>
+
+    <div class="phase-timeline">
+      <div class="phase-card">
+        <div class="phase-time" style="background:#fdf3d0">
+          <div class="phase-month">第一周</div>
+          <div class="phase-weeks" style="color:#633806">基础<br>入门</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-name">工具认识 + 手感建立</div>
+          <ul class="phase-tasks">
+            <li>了解戳针型号（36号粗针 / 38号中针 / 40号细针）</li>
+            <li>学习「垂直戳入」正确姿势，避免断针</li>
+            <li>用本白核心毛练习基础球形、扁片</li>
+            <li>完成第一个作品：一颗红色羊毛毡圣诞球</li>
+          </ul>
+          <span class="phase-badge" style="background:#fdf3d0;color:#854F0B;border:1px solid #e6c84a">目标：完成1件成品</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-time" style="background:#fdf3d0">
+          <div class="phase-month">第二周</div>
+          <div class="phase-weeks" style="color:#633806">混色<br>塑形</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-name">颜色控制 + 表面质感</div>
+          <ul class="phase-tasks">
+            <li>练习叠色技法：先浅色底层，后深色细节</li>
+            <li>表面处理：细针做最终收表，达到顺滑质感</li>
+            <li>完成：圣诞树挂件（星形/雪花/铃铛）各一</li>
+            <li>学习如何打孔穿细绳，制作成品挂件</li>
+          </ul>
+          <span class="phase-badge" style="background:#fdf3d0;color:#854F0B;border:1px solid #e6c84a">目标：掌握混色，完成3件挂件</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-time" style="background:#fff0ea">
+          <div class="phase-month">第3–4周</div>
+          <div class="phase-weeks" style="color:#993C1D">立体<br>造型</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-name">3D造型：雪人 / 麋鹿</div>
+          <ul class="phase-tasks">
+            <li>学习分部件制作：头 / 身 / 四肢，再拼合</li>
+            <li>鼻子（橙色胡萝卜形）、围巾（长条毛条）等细节</li>
+            <li>接合技术：用戳针把部件戳合固定</li>
+            <li>完成：一只立体雪人摆件（约8cm高）</li>
+          </ul>
+          <span class="phase-badge" style="background:#fff0ea;color:#993C1D;border:1px solid #F0997B">目标：完成立体立件，可拍照上架</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-time" style="background:#fff0ea">
+          <div class="phase-month">月2</div>
+          <div class="phase-weeks" style="color:#993C1D">骨架<br>铁丝</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-name">铁丝骨架 · 可动关节</div>
+          <ul class="phase-tasks">
+            <li>28号铁丝扭制基础人形/动物骨架</li>
+            <li>核心毛包裹铁丝，再上色彩毛</li>
+            <li>完成：铁丝骨架圣诞麋鹿（四肢可弯曲）</li>
+            <li>拍摄12张产品图（主图/场景/细节）</li>
+          </ul>
+          <span class="phase-badge" style="background:#fff0ea;color:#993C1D;border:1px solid #F0997B">目标：出品可销售级别产品</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-time" style="background:#f9e8e6">
+          <div class="phase-month">月3</div>
+          <div class="phase-weeks" style="color:#c0392b">产品<br>线开发</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-name">圣诞品系列 · 批量化</div>
+          <ul class="phase-tasks">
+            <li>确定5款核心产品，每款重复制作5遍</li>
+            <li>计算每件制作时间 + 材料成本</li>
+            <li>组合成「12件礼盒套装」，提升客单价</li>
+            <li>开始Etsy/Amazon Handmade 账号注册</li>
+          </ul>
+          <span class="phase-badge" style="background:#f9e8e6;color:#c0392b;border:1px solid #e87d75">目标：库存30件，上架第一批</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Needle guide -->
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">戳针选购指南</div><div class="divider-line"></div></div>
+    <div class="needle-guide">
+      <div class="needle-card">
+        <div class="needle-num" style="color:#b8860b">#36</div>
+        <div class="needle-use">粗针<br>打底塑形<br>快速缩小体积<br>新手从这里开始</div>
+      </div>
+      <div class="needle-card">
+        <div class="needle-num" style="color:#854F0B">#38</div>
+        <div class="needle-use">中针<br>过渡用<br>细化形状<br>接合部件</div>
+      </div>
+      <div class="needle-card">
+        <div class="needle-num" style="color:#633806">#40</div>
+        <div class="needle-use">细针<br>表面收光<br>细部纹路<br>眼睛毛发细节</div>
+      </div>
+      <div class="needle-card">
+        <div class="needle-num" style="color:#3d2800">#42</div>
+        <div class="needle-use">超细针<br>进阶专用<br>写实动物毛发<br>极细线条</div>
+      </div>
+    </div>
+
+    <!-- Wool guide -->
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">羊毛材料选择</div><div class="divider-line"></div></div>
+    <div class="wool-grid">
+      <div class="wool-card">
+        <div class="wool-color-bar" style="background:linear-gradient(to right,#e8e0d8,#d4c8bc)"></div>
+        <div class="wool-body">
+          <div class="wool-name">核心毛（Core Wool）</div>
+          <div class="wool-desc">打底专用，便宜粗糙但扎实。做骨架填充，外层再包美麗諾。每100g约NT$80–120。</div>
+        </div>
+      </div>
+      <div class="wool-card">
+        <div class="wool-color-bar" style="background:linear-gradient(to right,#f9c8d0,#e8a0b0,#c06080)"></div>
+        <div class="wool-body">
+          <div class="wool-name">美麗諾羊毛（Merino）</div>
+          <div class="wool-desc">最推荐！细腻柔软，颜色饱和，出品好看。新西兰进口，每50g约NT$120–200。首选品牌：Wolltraum。</div>
+        </div>
+      </div>
+      <div class="wool-card">
+        <div class="wool-color-bar" style="background:linear-gradient(to right,#d0e8c0,#a0c880,#6a9840)"></div>
+        <div class="wool-body">
+          <div class="wool-name">科里黛尔（Corriedale）</div>
+          <div class="wool-desc">价格适中，略粗于美麗諾，容易塑形，适合立体造型初学者。</div>
+        </div>
+      </div>
+      <div class="wool-card">
+        <div class="wool-color-bar" style="background:linear-gradient(to right,#f0e8c0,#e8d080,#d0a820)"></div>
+        <div class="wool-body">
+          <div class="wool-name">植物染羊毛</div>
+          <div class="wool-desc">天然植物色彩，柔和不饱和，适合做「北欧风」「自然系」圣诞品，高端路线用。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resources -->
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">学习资源推荐</div><div class="divider-line"></div></div>
+    <div class="resources-grid">
+      <div class="resource-card">
+        <div class="resource-type" style="color:#c0392b">YouTube · 免费 · 零基础首选</div>
+        <div class="resource-name">PenFelt Studio (LeBrie Rich)</div>
+        <div class="resource-desc">15年经验，专攻初学者。蘑菇、地精、食物类毛毡，教学节奏最友好。</div>
+        <div class="resource-tags">
+          <span class="rtag" style="background:#f9e8e6;color:#c0392b">零基础</span>
+          <span class="rtag" style="background:#f2ece2;color:#6b5e52">英文</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#c0392b">YouTube · 免费 · 最受欢迎</div>
+        <div class="resource-name">The Wishing Shed (Rachel Austin)</div>
+        <div class="resource-desc">定格动画展示过程，原创设计，可购买书面指南。擅长迷你动物和圣诞题材。</div>
+        <div class="resource-tags">
+          <span class="rtag" style="background:#f9e8e6;color:#c0392b">动物造型</span>
+          <span class="rtag" style="background:#fdf3d0;color:#854F0B">圣诞题材</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#c0392b">YouTube · 免费 · 中阶进阶</div>
+        <div class="resource-name">Sarafina Fiber Art (Sara Renzulli)</div>
+        <div class="resource-desc">119K订阅，专做写实大型动物雕塑，湿毡+戳针结合技法，技术细节丰富。</div>
+        <div class="resource-tags">
+          <span class="rtag" style="background:#f9e8e6;color:#c0392b">写实动物</span>
+          <span class="rtag" style="background:#e0f2f2;color:#1a6b6b">进阶</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#c0392b">YouTube · 免费 · 技法最详细</div>
+        <div class="resource-name">Mrs. Cute Felts</div>
+        <div class="resource-desc">拍摄光线极好，每个步骤清晰展示，特别擅长讲解常见错误与解决方案。</div>
+        <div class="resource-tags">
+          <span class="rtag" style="background:#f9e8e6;color:#c0392b">技法详解</span>
+          <span class="rtag" style="background:#f2ece2;color:#6b5e52">错误纠正</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#2d6a4f">付费平台</div>
+        <div class="resource-name">Bear Creek Needle Felting Academy</div>
+        <div class="resource-desc">15年经验羊农Teresa主理，系统课程从基础到写实，含社群支持，提供15%材料折扣。</div>
+        <div class="resource-tags">
+          <span class="rtag" style="background:#e8f5ee;color:#2d6a4f">系统课</span>
+          <span class="rtag" style="background:#fdf3d0;color:#854F0B">英文</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#2d6a4f">付费平台</div>
+        <div class="resource-name">Felt Alive (Kay Petal)</div>
+        <div class="resource-desc">专攻人偶面部雕塑，进阶必看。免费试看部分教程，Santa Doll系列极适合圣诞品开发。</div>
+        <div class="resource-tags">
+          <span class="rtag" style="background:#e8f5ee;color:#2d6a4f">人偶面部</span>
+          <span class="rtag" style="background:#fdf3d0;color:#854F0B">圣诞题材</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#1a6b6b">中文资源</div>
+        <div class="resource-name">B站：阿福手工 / 手工森林</div>
+        <div class="resource-desc">中文毛毡教程最丰富，食物类/动物类教程多，日系审美风格，适合华人市场研究。</div>
+        <div class="resource-tags">
+          <span class="rtag" style="background:#e0f2f2;color:#1a6b6b">中文</span>
+          <span class="rtag" style="background:#f2ece2;color:#6b5e52">免费</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#8b3a52">社群</div>
+        <div class="resource-name">Facebook: Needle Felting Group</div>
+        <div class="resource-desc">全球最大戳针毡社群，新手提问专区活跃，发图可快速得到改进建议。</div>
+        <div class="resource-tags">
+          <span class="rtag" style="background:#f5e6eb;color:#8b3a52">社群互助</span>
+          <span class="rtag" style="background:#f2ece2;color:#6b5e52">免费</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight insight-gold">
+      <strong>核心心得：</strong>戳针必须垂直刺入，斜针是断针首因。买「粗→中→细」三支组合针起步，不要一次买一堆。新西兰美麗諾羊毛比国产羊毛贵3倍，但成品质感天差地别——用在表层，核心打底用便宜核心毛就够了。
+    </div>
+
+    <!-- Common mistakes accordion -->
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">常见错误 & 解决方案</div><div class="divider-line"></div></div>
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAccordion(this)">断针率很高，怎么办？<span>+</span></button>
+      <div class="accordion-body">针头折断几乎100%是因为斜角戳入或者在毡垫以外的地方戳。垂直刺入是铁律。另外，在半毡化的硬块中强行戳细针也容易断——先换粗针把硬块戳松，再换细针。</div>
+    </div>
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAccordion(this)">作品表面很粗糙，怎么处理？<span>+</span></button>
+      <div class="accordion-body">表面粗糙是因为最后一步没用细针（#40以上）做「收表」。用细针以非常浅的深度、密集地戳整个表面，可以让纤维平整下去。也可以用手指蘸少量水轻抹后再戳。</div>
+    </div>
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAccordion(this)">颜色戳进去不均匀，有花斑？<span>+</span></button>
+      <div class="accordion-body">这是叠色技法需要练习的地方。正确做法：先铺薄薄一层色彩毛，用粗针压进去；再铺第二层、第三层，每层都要薄。不要一次放太多毛试图一步到位。</div>
+    </div>
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAccordion(this)">两个部件接合不牢固？<span>+</span></button>
+      <div class="accordion-body">接合时要在接缝处多垫一小撮羊毛当「粘合剂」，然后用中针在接缝周围斜45度戳（这是极少数可以斜戳的情况），把纤维交织缠绕。接合后再从上往下垂直戳收表。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CHAPTER 2: CROCHET ─── -->
+<div class="chapter" id="crochet">
+  <div class="container">
+    <div class="chapter-label">第二技艺 · 月4–6</div>
+    <h2 class="chapter-title">钩织 Crochet</h2>
+    <p class="chapter-desc">逻辑性最强的手工艺，型纸资源最丰富，线材成本极低。学会看日本符号图后，可解锁全球百万份免费型纸。</p>
+
+    <div class="craft-strip" style="background:#f5e6eb;border:1px solid #d4537e">
+      <div class="craft-num" style="color:#8b3a52">02</div>
+      <div class="craft-info">
+        <h3 style="color:#72243E">钩织技法路径</h3>
+        <p style="color:#993556">低材料成本 · Amigurumi玩偶 · PDF型纸被动收入</p>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">基础针法一览</div><div class="divider-line"></div></div>
+
+    <table class="technique-table">
+      <thead>
+        <tr>
+          <th>针法名称</th>
+          <th>日文符号</th>
+          <th>难度</th>
+          <th>主要用途</th>
+          <th>何时学</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>锁针（ch）</strong></td>
+          <td>○</td>
+          <td><span class="diff-dots">●○○</span></td>
+          <td>起针、空间针</td>
+          <td>第1天</td>
+        </tr>
+        <tr>
+          <td><strong>引拔针（sl st）</strong></td>
+          <td>•</td>
+          <td><span class="diff-dots">●○○</span></td>
+          <td>连接、收尾</td>
+          <td>第1天</td>
+        </tr>
+        <tr>
+          <td><strong>短针（sc）</strong></td>
+          <td>×</td>
+          <td><span class="diff-dots">●○○</span></td>
+          <td>Amigurumi主要针法</td>
+          <td>第1周</td>
+        </tr>
+        <tr>
+          <td><strong>中长针（hdc）</strong></td>
+          <td>T</td>
+          <td><span class="diff-dots">●●○</span></td>
+          <td>过渡，稍高织片</td>
+          <td>第2周</td>
+        </tr>
+        <tr>
+          <td><strong>长针（dc）</strong></td>
+          <td>T̂</td>
+          <td><span class="diff-dots">●●○</span></td>
+          <td>花样、包包</td>
+          <td>第2周</td>
+        </tr>
+        <tr>
+          <td><strong>加针（inc）</strong></td>
+          <td>V</td>
+          <td><span class="diff-dots">●○○</span></td>
+          <td>圆形扩展</td>
+          <td>第1周</td>
+        </tr>
+        <tr>
+          <td><strong>减针（dec）</strong></td>
+          <td>∧</td>
+          <td><span class="diff-dots">●●○</span></td>
+          <td>立体收口</td>
+          <td>第2周</td>
+        </tr>
+        <tr>
+          <td><strong>爆米花针（pop）</strong></td>
+          <td>特殊</td>
+          <td><span class="diff-dots">●●●</span></td>
+          <td>装饰立体感</td>
+          <td>月2后</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">推荐学习资源</div><div class="divider-line"></div></div>
+    <div class="resources-grid">
+      <div class="resource-card">
+        <div class="resource-type" style="color:#c0392b">YouTube · 免费 · 零基础最佳</div>
+        <div class="resource-name">Bella Coco Crochet</div>
+        <div class="resource-desc">500万订阅，每个针法有慢速分解视频，是钩织入门最权威的免费频道。</div>
+        <div class="resource-tags">
+          <span class="rtag" style="background:#f9e8e6;color:#c0392b">零基础</span>
+          <span class="rtag" style="background:#f2ece2;color:#6b5e52">英文</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#c0392b">YouTube · 免费 · 中阶花样</div>
+        <div class="resource-name">The Crochet Crowd</div>
+        <div class="resource-desc">专注中阶技巧，花样、配色、拼接教程极丰富，有大量圣诞题材作品。</div>
+        <div class="resource-tags">
+          <span class="rtag" style="background:#f5e6eb;color:#8b3a52">花样设计</span>
+          <span class="rtag" style="background:#fdf3d0;color:#854F0B">圣诞题材</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#2d6a4f">社群平台 · 必须注册</div>
+        <div class="resource-name">Ravelry.com</div>
+        <div class="resource-desc">全球最大钩织社群，免费型纸超过100万份。可以按「Christmas」「Amigurumi」筛选。</div>
+        <div class="resource-tags">
+          <span class="rtag" style="background:#e8f5ee;color:#2d6a4f">百万型纸</span>
+          <span class="rtag" style="background:#f2ece2;color:#6b5e52">免费</span>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#1a6b6b">书籍 · 必备参考书</div>
+        <div class="resource-name">日本宝库社钩针系列</div>
+        <div class="resource-desc">日本符号图国际通用标准，学会后可看所有日韩型纸。台湾实体书店可购。</div>
+        <div class="resource-tags">
+          <span class="rtag" style="background:#e0f2f2;color:#1a6b6b">符号图标准</span>
+          <span class="rtag" style="background:#f5e6eb;color:#8b3a52">中文版</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <strong>心得：</strong>钩织最大坑是「钩针号 ≠ 线材粗细」。买线一定先看线标上推荐的钩针号，照着选。Amigurumi玩偶要比建议钩针小一号，织得紧一些，才不会漏出填充棉。
+    </div>
+  </div>
+</div>
+
+<!-- ─── CHAPTER 3: SEWING ─── -->
+<div class="chapter" id="sewing">
+  <div class="container">
+    <div class="chapter-label">第三技艺 · 月7–12</div>
+    <h2 class="chapter-title">缝纫 Sewing</h2>
+    <p class="chapter-desc">需要设备投入，但迁移性最高。缝纫机一旦买了就解锁了布包、挂旗、桌布、圣诞袜等大量品类。</p>
+
+    <div class="craft-strip" style="background:#e8f5ee;border:1px solid #5DCAA5">
+      <div class="craft-num" style="color:#2d6a4f">03</div>
+      <div class="craft-info">
+        <h3 style="color:#085041">缝纫技法路径</h3>
+        <p style="color:#2d6a4f">扩大品类 · 设备投入后回报最高</p>
+      </div>
+    </div>
+
+    <div class="tool-section">
+      <div class="tool-card">
+        <div class="tool-card-head" style="background:#e8f5ee;color:#085041">缝纫机选购（新手）</div>
+        <div class="tool-item">
+          <div><div class="tool-name">Brother CS6000i</div><div class="tool-note">60种针法，入门首选，评价最稳定</div></div>
+          <div class="tool-price">~NT$6,000</div>
+        </div>
+        <div class="tool-item">
+          <div><div class="tool-name">Janome 2212</div><div class="tool-note">简单耐用，机械式，维修方便</div></div>
+          <div class="tool-price">~NT$5,500</div>
+        </div>
+        <div class="tool-item">
+          <div><div class="tool-name">Singer Heavy Duty</div><div class="tool-note">厚布料专用，适合帆布和牛仔</div></div>
+          <div class="tool-price">~NT$7,000</div>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-head" style="background:#e8f5ee;color:#085041">必备辅助工具</div>
+        <div class="tool-item">
+          <div><div class="tool-name">裁缝剪刀（24cm）</div><div class="tool-note">专布料用，不可剪纸</div></div>
+          <div class="tool-price">NT$400–800</div>
+        </div>
+        <div class="tool-item">
+          <div><div class="tool-name">布用划粉 + 直尺</div><div class="tool-note">消失型划粉，遇水消失</div></div>
+          <div class="tool-price">NT$150</div>
+        </div>
+        <div class="tool-item">
+          <div><div class="tool-name">拆线器</div><div class="tool-note">缝错必备，不可或缺</div></div>
+          <div class="tool-price">NT$50</div>
+        </div>
+        <div class="tool-item">
+          <div><div class="tool-name">熨斗 + 烫马</div><div class="tool-note">每道缝份都要熨，成品更平整</div></div>
+          <div class="tool-price">NT$800–1,500</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="resources-grid">
+      <div class="resource-card">
+        <div class="resource-type" style="color:#c0392b">YouTube · 免费</div>
+        <div class="resource-name">Made to Sew / Professor Pincushion</div>
+        <div class="resource-desc">英文最清楚的缝纫教学频道，有完整零基础到进阶的系列，含版型讲解。</div>
+        <div class="resource-tags"><span class="rtag" style="background:#f9e8e6;color:#c0392b">零基础</span></div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#2d6a4f">付费平台</div>
+        <div class="resource-name">Domestika 缝纫系列</div>
+        <div class="resource-desc">有中文字幕，系统化，适合需要结构化学习的人。</div>
+        <div class="resource-tags"><span class="rtag" style="background:#e8f5ee;color:#2d6a4f">中文字幕</span></div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#1a6b6b">书籍</div>
+        <div class="resource-name">日本ヴォーグ社图解缝纫</div>
+        <div class="resource-desc">日本文化服装学院出版，图解极细致，台湾有代购，每本约NT$400–600。</div>
+        <div class="resource-tags"><span class="rtag" style="background:#e0f2f2;color:#1a6b6b">图解详细</span></div>
+      </div>
+    </div>
+
+    <div class="insight insight-green">
+      <strong>心得：</strong>缝纫机「张力」设定是最多人卡关的地方。买一卷旧布料专门做「调张力实验」——面线 / 底线不平衡的问题90%靠调张力旋钮解决，而不是换针换线。每次换布料厚度都要重新测张力。
+    </div>
+  </div>
+</div>
+
+<!-- ─── CHAPTER 4: EMBROIDERY ─── -->
+<div class="chapter" id="embroidery">
+  <div class="container">
+    <div class="chapter-label">第四技艺 · 年2+</div>
+    <h2 class="chapter-title">刺绣 Embroidery</h2>
+    <p class="chapter-desc">最需要耐心，但配色训练价值最高。刺绣技法学好后，可以大幅提升其他三项技艺的视觉品质，也是高端溢价的关键。</p>
+
+    <div class="craft-strip" style="background:#e0f2f2;border:1px solid #5DCAA5">
+      <div class="craft-num" style="color:#1a6b6b">04</div>
+      <div class="craft-info">
+        <h3 style="color:#085041">刺绣技法路径</h3>
+        <p style="color:#1a6b6b">六大基础针法 · 配色训练 · 高端溢价</p>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">六大基础针法（必须掌握）</div><div class="divider-line"></div></div>
+
+    <table class="technique-table">
+      <thead>
+        <tr><th>针法</th><th>英文</th><th>难度</th><th>适合练习图案</th><th>常见用途</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>平针</strong></td><td>Running Stitch</td><td><span class="diff-dots">●○○</span></td><td>直线练习布</td><td>轮廓、虚线感</td></tr>
+        <tr><td><strong>回针</strong></td><td>Back Stitch</td><td><span class="diff-dots">●○○</span></td><td>几何图形轮廓</td><td>最常用轮廓针</td></tr>
+        <tr><td><strong>缎面绣</strong></td><td>Satin Stitch</td><td><span class="diff-dots">●●●</span></td><td>小型叶片、花瓣</td><td>填充色块</td></tr>
+        <tr><td><strong>法式结粒</strong></td><td>French Knot</td><td><span class="diff-dots">●●○</span></td><td>花蕊、雪花点</td><td>立体装饰点</td></tr>
+        <tr><td><strong>锁链绣</strong></td><td>Chain Stitch</td><td><span class="diff-dots">●●○</span></td><td>花茎、文字</td><td>线条感填充</td></tr>
+        <tr><td><strong>飞羽绣</strong></td><td>Fly Stitch</td><td><span class="diff-dots">●○○</span></td><td>树枝、叶子</td><td>自然植物元素</td></tr>
+      </tbody>
+    </table>
+
+    <div class="resources-grid">
+      <div class="resource-card">
+        <div class="resource-type" style="color:#c0392b">YouTube · 免费 · 最推荐</div>
+        <div class="resource-name">French Knot</div>
+        <div class="resource-desc">每个针法配慢动作分解，是公认讲解最清楚的免费刺绣频道，视频质量极高。</div>
+        <div class="resource-tags"><span class="rtag" style="background:#f9e8e6;color:#c0392b">慢速分解</span></div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#2d6a4f">付费 · 强烈推荐</div>
+        <div class="resource-name">Sarah K Benning / Domestika</div>
+        <div class="resource-desc">风格明确的现代刺绣，配色逻辑讲解详细，是我省了半年摸索时间的课。</div>
+        <div class="resource-tags"><span class="rtag" style="background:#e8f5ee;color:#2d6a4f">配色系统</span></div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-type" style="color:#1a6b6b">社群</div>
+        <div class="resource-name">Reddit: r/Embroidery</div>
+        <div class="resource-desc">日活跃，作品互评文化好，发图提问几分钟内有回应，有专用新手提问帖。</div>
+        <div class="resource-tags"><span class="rtag" style="background:#e0f2f2;color:#1a6b6b">新手友好</span></div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <strong>心得：</strong>刺绣线每次剪不超过45cm——太长会起毛、打结，成品质感大打折扣。缎面绣新手最容易在边缘「塌」进去，解决方法是先用回针绣一圈轮廓，再在轮廓内部填缎面绣，边缘会整齐很多。
+    </div>
+  </div>
+</div>
+
+<!-- ─── CHAPTER 5: COLOR THEORY ─── -->
+<div class="chapter" id="colortheory">
+  <div class="container">
+    <div class="chapter-label">设计系统</div>
+    <h2 class="chapter-title">配色设计完全指南</h2>
+    <p class="chapter-desc">手工艺品的配色直接决定销量。基于2024–2025圣诞市场趋势与色彩心理学整理出的实用配色系统。</p>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">圣诞品配色系统 · 按市场定位分类</div><div class="divider-line"></div></div>
+
+    <!-- Palette 1: Classic -->
+    <div class="palette-card" style="border-color:#c0392b">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+        <div>
+          <div class="palette-name">经典传统 · Classic Traditional</div>
+          <div class="palette-desc">覆盖最广的受众，亚马逊搜索量最高。深红+墨绿+金+白，唤起节日情感记忆。</div>
+        </div>
+        <span class="palette-tag" style="background:#f9e8e6;color:#c0392b;border:1px solid #e87d75">搜索量最高</span>
+      </div>
+      <div class="palette-chips">
+        <div class="chip-wrapper"><div class="chip" style="background:#8B0000" title="深红 Deep Red #8B0000"></div><div class="chip-label">#8B0000</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#C0392B" title="圣诞红 #C0392B"></div><div class="chip-label">#C0392B</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#1B5E20" title="墨绿 #1B5E20"></div><div class="chip-label">#1B5E20</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#2E7D32" title="圣诞绿 #2E7D32"></div><div class="chip-label">#2E7D32</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#B8860B" title="哑金 #B8860B"></div><div class="chip-label">#B8860B</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#F5F5DC" title="米白 #F5F5DC"></div><div class="chip-label">#F5F5DC</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#FFFFFF;border:1px solid #e8e0d8" title="纯白 #FFFFFF"></div><div class="chip-label">#FFFFFF</div></div>
+      </div>
+    </div>
+
+    <!-- Palette 2: Nordic -->
+    <div class="palette-card" style="border-color:#b8860b">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+        <div>
+          <div class="palette-name">北欧自然 · Nordic Natural</div>
+          <div class="palette-desc">2024–2025趋势色系，earthy tones。鼠尾草绿+赤陶+燕麦白，「手工感」最强，适合中高端定位。</div>
+        </div>
+        <span class="palette-tag" style="background:#fdf3d0;color:#854F0B;border:1px solid #e6c84a">2025趋势</span>
+      </div>
+      <div class="palette-chips">
+        <div class="chip-wrapper"><div class="chip" style="background:#7B9E87" title="鼠尾草绿 Sage #7B9E87"></div><div class="chip-label">#7B9E87</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#4A7B5C" title="深苔绿 #4A7B5C"></div><div class="chip-label">#4A7B5C</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#C46B3C" title="赤陶 Terracotta #C46B3C"></div><div class="chip-label">#C46B3C</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#E8B89A" title="暖杏 #E8B89A"></div><div class="chip-label">#E8B89A</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#F5F0E8" title="燕麦白 Oat #F5F0E8"></div><div class="chip-label">#F5F0E8</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#8B7355" title="暖棕 #8B7355"></div><div class="chip-label">#8B7355</div></div>
+      </div>
+    </div>
+
+    <!-- Palette 3: Luxury -->
+    <div class="palette-card" style="border-color:#6b5e52">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+        <div>
+          <div class="palette-name">奢华贵气 · Luxury Gold</div>
+          <div class="palette-desc">高客单价产品首选。酒红+深祖母绿+香槟金，适合「高端礼物」定位，可提升30%溢价。</div>
+        </div>
+        <span class="palette-tag" style="background:#f2ece2;color:#6b5e52;border:1px solid #d3d1c7">高溢价</span>
+      </div>
+      <div class="palette-chips">
+        <div class="chip-wrapper"><div class="chip" style="background:#610110" title="深酒红 Burgundy #610110"></div><div class="chip-label">#610110</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#8B1A2A" title="酒红 #8B1A2A"></div><div class="chip-label">#8B1A2A</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#1A3D2B" title="祖母绿 Emerald #1A3D2B"></div><div class="chip-label">#1A3D2B</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#CFB53B" title="古金 #CFB53B"></div><div class="chip-label">#CFB53B</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#F7CF7C" title="香槟金 #F7CF7C"></div><div class="chip-label">#F7CF7C</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#1C1C1C" title="近黑 #1C1C1C"></div><div class="chip-label">#1C1C1C</div></div>
+      </div>
+    </div>
+
+    <!-- Palette 4: Modern Pastels -->
+    <div class="palette-card" style="border-color:#8b3a52">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+        <div>
+          <div class="palette-name">现代粉嫩 · Modern Pastel</div>
+          <div class="palette-desc">竞争较小的差异化方向，吸引年轻买家。玫瑰金+粉蓝+薰衣草，适合「非传统圣诞」买家。</div>
+        </div>
+        <span class="palette-tag" style="background:#f5e6eb;color:#8b3a52;border:1px solid #ED93B1">差异化</span>
+      </div>
+      <div class="palette-chips">
+        <div class="chip-wrapper"><div class="chip" style="background:#E8A0B4" title="玫瑰粉 #E8A0B4"></div><div class="chip-label">#E8A0B4</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#B5C7D3" title="粉蓝 #B5C7D3"></div><div class="chip-label">#B5C7D3</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#C9B8E8" title="薰衣草 #C9B8E8"></div><div class="chip-label">#C9B8E8</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#E8C8A0" title="香草 #E8C8A0"></div><div class="chip-label">#E8C8A0</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#F5F0F0" title="奶白 #F5F0F0"></div><div class="chip-label">#F5F0F0</div></div>
+        <div class="chip-wrapper"><div class="chip" style="background:#B0A8A0" title="燕麦灰 #B0A8A0"></div><div class="chip-label">#B0A8A0</div></div>
+      </div>
+    </div>
+
+    <!-- Design Principles -->
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">配色设计原则</div><div class="divider-line"></div></div>
+    <div class="principle-grid">
+      <div class="principle-card">
+        <div class="principle-icon" style="background:#fdf3d0">60</div>
+        <div class="principle-title">60-30-10 法则</div>
+        <div class="principle-desc">主色占60%（背景/主体），辅色占30%（装饰/对比），点缀色占10%（金属/高亮）。不要超过3种主色。</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon" style="background:#f9e8e6">🌡</div>
+        <div class="principle-title">冷暖对比</div>
+        <div class="principle-desc">圣诞品最有力的搭配：暖红+冷绿。两者是互补色，天然对比强。加金色作为调和剂减少冲突感。</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon" style="background:#e8f5ee">●</div>
+        <div class="principle-title">明度控制</div>
+        <div class="principle-desc">同一色系中用深浅变化创造层次感。不要同时用多种纯色——降低其中一种的饱和度作为「底色」。</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon" style="background:#e0f2f2">Au</div>
+        <div class="principle-title">金属提亮</div>
+        <div class="principle-desc">金色（金线/铜色毛）或银色是手工圣诞品的万用提亮色，少量点缀即可大幅提升高级感。</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon" style="background:#f5e6eb">📷</div>
+        <div class="principle-title">拍照配色</div>
+        <div class="principle-desc">产品主图背景：浅米色/白色木板/绿色松枝。避免纯白背景——显廉价。中性暖色背景最出片。</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon" style="background:#fdf3d0">🎨</div>
+        <div class="principle-title">配色工具</div>
+        <div class="principle-desc">Coolors.co（调色板生成）/ Adobe Color（色轮工具）/ Pinterest Board（竞品配色收集）</div>
+      </div>
+    </div>
+
+    <div class="insight insight-gold">
+      <strong>配色心得：</strong>新手最常犯的错是「用太多颜色」。一件作品超过3种颜色几乎都会显得杂乱。先选定主色，再加一个对比色，最后用中性色（米白/棕/金）调和。少即是多。
+    </div>
+  </div>
+</div>
+
+<!-- ─── CHAPTER 6: AMAZON ─── -->
+<div class="chapter" id="amazon">
+  <div class="container">
+    <div class="chapter-label">商业化路径</div>
+    <h2 class="chapter-title">亚马逊圣诞季备货日历</h2>
+    <p class="chapter-desc">Q4（10–12月）是手工圣诞品最大销售窗口。时间节点的把握直接决定今年能否出货。</p>
+
+    <div class="cal-grid">
+      <div class="cal-month cal-normal">
+        <div class="cal-month-name" style="color:#6b5e52">1–2月</div>
+        <div class="cal-month-task">学习羊毛毡基础，研究Amazon竞品，记录价格带与差评</div>
+      </div>
+      <div class="cal-month cal-normal">
+        <div class="cal-month-name" style="color:#6b5e52">3月</div>
+        <div class="cal-month-task">确定产品线，打样5款，每款重复制作10遍</div>
+      </div>
+      <div class="cal-month cal-normal">
+        <div class="cal-month-name" style="color:#6b5e52">4月</div>
+        <div class="cal-month-task">注册Etsy店铺，拍摄产品图，上架第一批，收集反馈</div>
+      </div>
+      <div class="cal-month cal-normal">
+        <div class="cal-month-name" style="color:#6b5e52">5月</div>
+        <div class="cal-month-task">注册Amazon Handmade，关键词研究，优化Listing</div>
+      </div>
+      <div class="cal-month cal-warm">
+        <div class="cal-month-name" style="color:#633806">6月</div>
+        <div class="cal-month-task">开始圣诞品备货冲刺，目标：生产首批100件</div>
+      </div>
+      <div class="cal-month cal-warm">
+        <div class="cal-month-name" style="color:#633806">7月</div>
+        <div class="cal-month-task">持续备货，检查产品品质，开启早鸟促销测试</div>
+      </div>
+      <div class="cal-month cal-urgent">
+        <div class="cal-month-name" style="color:#c0392b">8月</div>
+        <div class="cal-month-task">⚠️ 关键节点：FBA入仓，9月底前必须完成备货</div>
+      </div>
+      <div class="cal-month cal-urgent">
+        <div class="cal-month-name" style="color:#c0392b">9月</div>
+        <div class="cal-month-task">⚠️ 发货至亚马逊仓库，检查Listing已被索引</div>
+      </div>
+      <div class="cal-month cal-urgent">
+        <div class="cal-month-name" style="color:#c0392b">10月</div>
+        <div class="cal-month-task">启动广告（PPC），节前流量开始上涨</div>
+      </div>
+      <div class="cal-month cal-urgent">
+        <div class="cal-month-name" style="color:#c0392b">11月</div>
+        <div class="cal-month-task">Black Friday旺季！专注广告优化与售后，不接新定制</div>
+      </div>
+      <div class="cal-month cal-urgent">
+        <div class="cal-month-name" style="color:#c0392b">12月</div>
+        <div class="cal-month-task">圣诞高峰！收集买家评价，为明年备货做数据统计</div>
+      </div>
+      <div class="cal-month cal-normal">
+        <div class="cal-month-name" style="color:#6b5e52">1月（次年）</div>
+        <div class="cal-month-task">复盘数据：哪款卖得动、什么配色受欢迎，规划明年选品</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <strong>最重要的一件事：</strong>今年第一批上架的核心目的不是赚钱，是拿到真实市场数据。哪款卖得动、什么价位有竞争力、哪种产品图点击率高——这些数据是第二年的备货基础。
+    </div>
+
+    <!-- Checklist -->
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">上架前必检清单</div><div class="divider-line"></div></div>
+    <ul class="checklist" id="checklist">
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div>产品主图：白/米色背景，1000×1000px以上，清晰无水印</li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div>场景图×3张：放在圣诞树旁、礼品盒中、壁炉边</li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div>产品标题：含主关键词 "needle felted Christmas ornament handmade"</li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div>Bullet Points×5：材料、尺寸、用途、礼物属性、手工卖点</li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div>关键词研究：用 Helium 10 或 Keyword Tool 找长尾词</li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div>定价：比工厂货高20–40%（手工溢价），礼盒套装比单件高30%</li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div>库存数量：首批至少30件，避免缺货断链</li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div>包装：牛皮纸礼盒+棉纸+手写感贴纸，强化礼物属性</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ─── OVERVIEW ─── -->
+<div class="chapter" id="overview">
+  <div class="container">
+    <div class="chapter-label">全局视角</div>
+    <h2 class="chapter-title">四技艺学习优先级总表</h2>
+    <p class="chapter-desc">结合商业回报速度与学习成本的综合排序，是你选择「先毛毡后钩织」这条路线的底层逻辑。</p>
+
+    <table class="technique-table">
+      <thead>
+        <tr><th>技艺</th><th>起步成本</th><th>出第一件成品</th><th>可销售水准</th><th>圣诞品潜力</th><th>与其他技艺的协同</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:#fdf8ec">
+          <td><strong style="color:#b8860b">羊毛毡</strong></td>
+          <td>NT$1,500–2,000</td>
+          <td>第1天</td>
+          <td>1–3个月</td>
+          <td>★★★★★</td>
+          <td>装饰钩织成品、刺绣配色参考</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#8b3a52">钩织</strong></td>
+          <td>NT$500–800</td>
+          <td>第3天</td>
+          <td>2–4个月</td>
+          <td>★★★★☆</td>
+          <td>圣诞玩偶可加毛毡装饰</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#2d6a4f">缝纫</strong></td>
+          <td>NT$5,000–8,000</td>
+          <td>第1周</td>
+          <td>3–6个月</td>
+          <td>★★★☆☆</td>
+          <td>圣诞袜+毛毡装饰，绣片应用</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#1a6b6b">刺绣</strong></td>
+          <td>NT$300–500</td>
+          <td>第1天</td>
+          <td>6–12个月</td>
+          <td>★★☆☆☆</td>
+          <td>提升所有产品视觉品质</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="insight insight-green">
+      <strong>最终心得：</strong>手工艺的学习没有捷径，但有正确的路径。每项技艺专注3个月，做出一个「完整且可以送人的作品」，这个心理里程碑比任何课时数都重要。从完成中建立信心，从卖出第一件作品中建立商业直觉——这才是从小白到品牌创业者最真实的路径。
+    </div>
+  </div>
+</div>
+
+<footer>
+  手工艺精通指南 · 2025–2026版 · 专为亚马逊圣诞品创业者定制<br>
+  内容持续更新 · 进度数据保存在本地浏览器
+</footer>
+
+<script>
+// Scroll progress bar
+window.addEventListener('scroll', () => {
+  const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('scrollProgress').style.width = scrolled + '%';
+});
+
+// Nav active state
+const sections = document.querySelectorAll('.chapter, .progress-section');
+const navLinks = document.querySelectorAll('nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    if (window.scrollY >= section.offsetTop - 100) current = section.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+  });
+});
+
+// Progress tracker
+const levelLabels = {
+  felt: ['未开始','入门','基础','进阶','熟练','精通'],
+  crochet: ['未开始','入门','基础','进阶','熟练','精通'],
+  sewing: ['未开始','入门','基础','进阶','熟练','精通'],
+  embroidery: ['未开始','入门','基础','进阶','熟练','精通']
+};
+
+function loadProgress() {
+  ['felt','crochet','sewing','embroidery'].forEach(skill => {
+    const saved = JSON.parse(localStorage.getItem('craft_' + skill) || '[]');
+    saved.forEach((done, i) => {
+      if (done) {
+        const dots = document.getElementById(skill + '-ms').children;
+        if (dots[i]) dots[i].classList.add('done');
+      }
+    });
+    updateBar(skill);
+  });
+}
+
+function toggleMS(skill, idx, total) {
+  const key = 'craft_' + skill;
+  const saved = JSON.parse(localStorage.getItem(key) || '[]');
+  while (saved.length < total) saved.push(false);
+  saved[idx] = !saved[idx];
+  localStorage.setItem(key, JSON.stringify(saved));
+  const dots = document.getElementById(skill + '-ms').children;
+  dots[idx].classList.toggle('done', saved[idx]);
+  updateBar(skill);
+}
+
+function updateBar(skill) {
+  const saved = JSON.parse(localStorage.getItem('craft_' + skill) || '[]');
+  const done = saved.filter(Boolean).length;
+  const total = 5;
+  const pct = (done / total) * 100;
+  document.getElementById(skill + '-bar').style.width = pct + '%';
+  const labels = levelLabels[skill];
+  document.getElementById(skill + '-level').textContent = labels[Math.min(done, labels.length - 1)];
+}
+
+loadProgress();
+
+// Checklist
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  const key = 'checklist_' + Array.from(el.parentElement.children).indexOf(el);
+  localStorage.setItem(key, el.classList.contains('checked'));
+}
+
+// Load checklist state
+document.querySelectorAll('#checklist li').forEach((li, i) => {
+  if (localStorage.getItem('checklist_' + i) === 'true') li.classList.add('checked');
+});
+
+// Accordion
+function toggleAccordion(trigger) {
+  const body = trigger.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.accordion-trigger span').forEach(s => s.textContent = '+');
+  if (!isOpen) {
+    body.classList.add('open');
+    trigger.querySelector('span').textContent = '−';
+  }
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>

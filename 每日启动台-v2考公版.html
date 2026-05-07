@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>2026 每日启动台</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg:#f4f2ed;--bg2:#ebe8e1;--card:#ffffff;--ink:#1c1917;--ink2:#44403c;--ink3:#78716c;--ink4:#a8a29e;
+  --border:rgba(28,25,23,.07);--border2:rgba(28,25,23,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 3px 10px rgba(0,0,0,.03);
+  --shadow2:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.04);
+  --red:#b91c1c;--red-l:rgba(185,28,28,.07);
+  --gold:#92400e;--gold-l:rgba(146,64,14,.07);
+  --plum:#7e22ce;--plum-l:rgba(126,34,206,.07);
+  --teal:#0f766e;--teal-l:rgba(15,118,110,.07);
+  --blue:#1d4ed8;--blue-l:rgba(29,78,216,.07);
+  --orange:#c2410c;--orange-l:rgba(194,65,12,.07);
+  --green:#15803d;--green-l:rgba(21,128,61,.07);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-y:scroll}
+body{font-family:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.7;min-height:100vh;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,input,textarea,select{font-family:inherit}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:3px}
+
+/* ── Layout ── */
+.shell{max-width:560px;margin:0 auto;padding:0 16px 100px}
+
+/* ── Top bar ── */
+.topbar{
+  position:sticky;top:0;z-index:80;
+  background:rgba(244,242,237,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  margin:0 -16px;padding:0 16px;
+}
+.topbar-inner{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+.topbar-brand{font-family:'Noto Serif SC',serif;font-weight:900;font-size:15px;color:var(--red);letter-spacing:-.02em}
+.topbar-sync{font-size:10px;color:var(--ink4);display:flex;align-items:center;gap:4px}
+.topbar-dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+
+/* ── Tabs ── */
+.tabs{
+  display:flex;gap:0;margin:0 -16px;padding:0 16px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  background:none;border:none;padding:8px 14px;font-size:12px;font-weight:500;
+  color:var(--ink3);cursor:pointer;white-space:nowrap;
+  border-bottom:2px solid transparent;transition:all .15s;
+}
+.tab.on{color:var(--red);font-weight:700;border-bottom-color:var(--red)}
+
+/* ── Panels ── */
+.panel{display:none}.panel.on{display:block}
+
+/* ── Header card ── */
+.hdr{padding:20px 0 16px;text-align:center}
+.hdr-phase{
+  display:inline-block;font-size:10px;letter-spacing:.14em;font-weight:600;
+  color:var(--red);background:var(--red-l);padding:2px 10px;border-radius:3px;margin-bottom:6px;
+}
+.hdr-date{font-family:'Noto Serif SC',serif;font-size:22px;font-weight:900;line-height:1.3}
+.hdr-date em{font-style:normal;color:var(--red)}
+.hdr-sub{font-size:12px;color:var(--ink3);margin-top:2px}
+.hdr-stats{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.hdr-chip{font-size:11px;padding:3px 10px;border-radius:14px;background:var(--card);border:1px solid var(--border);font-weight:500}
+.hdr-chip b{font-weight:700}
+
+/* ── Countdown ── */
+.countdown{text-align:center;font-size:11px;color:var(--ink4);padding:4px 0 8px}
+.countdown span{color:var(--red);font-weight:700}
+
+/* ── Task card ── */
+.task-list{display:flex;flex-direction:column;gap:6px;padding-bottom:8px}
+.task{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:12px 14px;box-shadow:var(--shadow);transition:all .2s;
+  position:relative;overflow:hidden;
+}
+.task.done{border-left:3.5px solid}
+.task.skip{opacity:.3;pointer-events:none;filter:grayscale(.4)}
+.task-top{display:flex;align-items:center;gap:10px}
+.task-check{
+  width:26px;height:26px;border-radius:50%;border:2px solid #d4d0ca;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  cursor:pointer;transition:all .15s;font-size:12px;color:#fff;
+}
+.task.done .task-check{border-color:transparent}
+.task-info{flex:1;min-width:0}
+.task-name{font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.task-meta{font-size:10px;color:var(--ink4);margin-top:0}
+.streak{font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;background:var(--red-l);color:var(--red)}
+
+/* Time adjuster */
+.task-time{display:flex;align-items:center;gap:3px;margin-top:6px}
+.t-btn{
+  background:none;border:1px solid var(--border);border-radius:4px;
+  padding:1px 7px;font-size:10px;font-weight:600;cursor:pointer;color:var(--ink3);transition:all .1s;
+}
+.t-btn:active{background:var(--bg2)}
+.t-val{font-size:13px;font-weight:700;min-width:46px;text-align:center}
+
+/* Next action */
+.task-next{display:flex;align-items:center;gap:5px;margin-top:5px}
+.task-next label{font-size:9px;color:var(--ink4);font-weight:600;flex-shrink:0}
+.task-next input{
+  flex:1;border:none;border-bottom:1px dashed rgba(0,0,0,.1);
+  background:transparent;padding:2px 0;font-size:11px;color:var(--ink2);outline:none;
+}
+.task-next input::placeholder{color:#c5c0b8}
+
+/* ── Section label ── */
+.slabel{font-size:10px;letter-spacing:.14em;font-weight:700;margin:20px 0 8px;text-transform:uppercase}
+
+/* ── Milestone ── */
+.ms{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);
+  padding:10px 12px;margin-bottom:6px;box-shadow:var(--shadow);
+}
+.ms.ms-done{border-left:3px solid}
+.ms-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.ms-name{font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px}
+.ms-due{font-size:9px;color:var(--ink4)}
+.ms-bar{height:4px;background:var(--bg2);border-radius:2px;overflow:hidden;margin-bottom:4px}
+.ms-fill{height:100%;border-radius:2px;transition:width .3s}
+.ms-bot{display:flex;justify-content:space-between;align-items:center}
+.ms-pct{font-size:10px;font-weight:600}
+.ms-input{
+  width:40px;text-align:center;border:1px solid var(--border);border-radius:3px;
+  padding:1px 3px;font-size:11px;font-weight:600;outline:none;
+}
+.ms-input:focus{border-color:var(--red)}
+.ms-unit{font-size:9px;color:var(--ink4)}
+
+/* ── Book list ── */
+.book{
+  display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:4px;
+  border-radius:var(--r-sm);cursor:pointer;transition:all .1s;
+  background:var(--card);border:1px solid var(--border);
+}
+.book:active{background:var(--bg2)}
+.book.read{opacity:.6}
+.book-check{
+  width:20px;height:20px;border-radius:4px;border:2px solid #d4d0ca;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-size:10px;color:#fff;transition:all .15s;
+}
+.book.read .book-check{border-color:transparent}
+.book-title{font-size:13px;font-weight:500}
+.book.read .book-title{text-decoration:line-through;color:var(--ink3)}
+.book-period{font-size:10px;color:var(--ink4);margin-left:auto;flex-shrink:0}
+
+/* ── History ── */
+.heat-grid{
+  display:grid;gap:2px;font-size:9px;overflow-x:auto;
+  padding-bottom:4px;
+}
+.heat-cell{
+  height:20px;border-radius:3px;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:600;font-size:8px;
+}
+.day-header{text-align:center;color:var(--ink4);font-size:9px;line-height:1.2}
+.hist-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:14px;margin-bottom:10px;box-shadow:var(--shadow);
+}
+.hist-date{font-weight:700;font-size:13px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
+.hist-items{display:flex;flex-wrap:wrap;gap:4px}
+.hist-tag{font-size:10px;padding:2px 7px;border-radius:3px;font-weight:600}
+
+/* ── Week note ── */
+.wnote{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:14px;box-shadow:var(--shadow);margin-top:10px;
+}
+.wnote textarea{
+  width:100%;min-height:50px;border:1px dashed var(--border);border-radius:var(--r-sm);
+  padding:8px;font-size:12px;background:var(--bg);resize:vertical;outline:none;color:var(--ink2);line-height:1.6;
+}
+.wnote textarea:focus{border-color:var(--border2)}
+
+/* ── Data btns ── */
+.data-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.data-btn{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);
+  padding:8px 14px;font-size:12px;cursor:pointer;font-weight:600;box-shadow:var(--shadow);transition:all .1s;
+}
+.data-btn:active{background:var(--bg2)}
+.data-btn.danger{color:var(--red)}
+
+/* ── Responsive ── */
+@media(max-width:380px){.hdr-date{font-size:18px}.task{padding:10px 12px}}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-brand">🎯 2026 每日启动台</div>
+      <div class="topbar-sync"><span class="topbar-dot"></span> 本地存储</div>
+    </div>
+    <div class="tabs" id="tabs"></div>
+  </div>
+
+  <!-- Panels -->
+  <div id="panelToday" class="panel on"></div>
+  <div id="panelMilestone" class="panel"></div>
+  <div id="panelReading" class="panel"></div>
+  <div id="panelHistory" class="panel"></div>
+  <div id="panelData" class="panel"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════
+const TASKS = [
+  {id:"body",emoji:"🧘",name:"体态晨练",color:"#b91c1c",bg:"rgba(185,28,28,.07)",
+   phases:{A:30,B:30,C:30,D:30},labels:{A:"30min",B:"30min",C:"30min",D:"30min"}},
+  {id:"xingce",emoji:"📐",name:"行测",color:"#1e40af",bg:"rgba(30,64,175,.07)",
+   phases:{A:150,B:150,C:210,D:90},labels:{A:"2.5h",B:"2.5h",C:"3.5h",D:"1.5h"}},
+  {id:"shenlun",emoji:"✍️",name:"申论",color:"#6d28d9",bg:"rgba(109,40,217,.07)",
+   phases:{A:90,B:90,C:120,D:60},labels:{A:"1.5h",B:"1.5h",C:"2h",D:"1h"}},
+  {id:"amazon",emoji:"💰",name:"亚马逊",color:"#92400e",bg:"rgba(146,64,14,.07)",
+   phases:{A:60,B:60,C:60,D:60},labels:{A:"1h",B:"1h",C:"1h",D:"1h"}},
+  {id:"reading",emoji:"📚",name:"阅读",color:"#1d4ed8",bg:"rgba(29,78,216,.07)",
+   phases:{A:30,B:30,C:30,D:60},labels:{A:"30min",B:"30min",C:"30min",D:"1h"}},
+  {id:"procreate",emoji:"🎨",name:"Procreate",color:"#7e22ce",bg:"rgba(126,34,206,.07)",
+   phases:{A:0,B:0,C:0,D:120},labels:{A:"周末调剂",B:"周末调剂",C:"周末调剂",D:"2h"}},
+  {id:"felt",emoji:"🧶",name:"手工",color:"#0f766e",bg:"rgba(15,118,110,.07)",
+   phases:{A:0,B:0,C:0,D:60},labels:{A:"周末调剂",B:"周末调剂",C:"周末调剂",D:"1h"}},
+];
+
+const MILESTONES = [
+  {id:"m1",phase:"Q2",task:"xingce",label:"基础视频课全部刷完",target:1,unit:"✓",due:"6月底"},
+  {id:"m2",phase:"Q2",task:"xingce",label:"判断推理专项刷题200题",target:200,unit:"题",due:"6月底"},
+  {id:"m3",phase:"Q2",task:"xingce",label:"资料分析专项刷题100题",target:100,unit:"题",due:"6月底"},
+  {id:"m4",phase:"Q2",task:"shenlun",label:"拆解真题申论答案10套",target:10,unit:"套",due:"7月底"},
+  {id:"m5",phase:"Q2",task:"body",label:"体态·理论课完成(24h)",target:24,unit:"h",due:"6月底"},
+  {id:"m6",phase:"Q3",task:"xingce",label:"2018-2023国考行测真题6套",target:6,unit:"套",due:"10月底"},
+  {id:"m7",phase:"Q3",task:"shenlun",label:"申论归纳概括题刷30题",target:30,unit:"题",due:"8月底"},
+  {id:"m8",phase:"Q3",task:"shenlun",label:"申论微申论写20篇",target:20,unit:"篇",due:"9月底"},
+  {id:"m9",phase:"Q3",task:"body",label:"体态·跟练课完成(55h)",target:55,unit:"h",due:"9月底"},
+  {id:"m10",phase:"Q3",task:"amazon",label:"亚马逊铃铛挂饰上架",target:1,unit:"✓",due:"9月中"},
+  {id:"m11",phase:"Q3",task:"reading",label:"《置身事内》读完",target:1,unit:"✓",due:"8月底"},
+  {id:"m12",phase:"Q3",task:"reading",label:"累计读完8本书",target:8,unit:"本",due:"9月底"},
+  {id:"m13",phase:"Q4",task:"shenlun",label:"申论大作文写10篇",target:10,unit:"篇",due:"11月底"},
+  {id:"m14",phase:"Q4",task:"xingce",label:"模拟套题完成10套",target:10,unit:"套",due:"11月底"},
+  {id:"m15",phase:"Q4",task:"amazon",label:"Q4利润目标15万",target:15,unit:"万",due:"12月底"},
+  {id:"m16",phase:"Q4",task:"reading",label:"累计读完12本书",target:12,unit:"本",due:"12月底"},
+  {id:"m17",phase:"Q1n",task:"procreate",label:"Procreate恢复·完成20课",target:20,unit:"课",due:"2月底"},
+  {id:"m18",phase:"Q1n",task:"felt",label:"手工春季系列3款成品",target:3,unit:"款",due:"3月"},
+  {id:"m19",phase:"Q1n",task:"reading",label:"全年累计18本书",target:18,unit:"本",due:"3月底"},
+];
+
+const BOOKS = [
+  {id:"b1",period:"4-5月",title:"思考，快与慢"},{id:"b2",period:"4-5月",title:"穷查理宝典"},
+  {id:"b3",period:"4-5月",title:"学会提问"},{id:"b4",period:"4-5月",title:"原则"},
+  {id:"b5",period:"6-7月",title:"被讨厌的勇气"},{id:"b6",period:"6-7月",title:"自控力"},
+  {id:"b7",period:"6-7月",title:"非暴力沟通"},{id:"b8",period:"6-7月",title:"心流"},
+  {id:"b9",period:"8-9月",title:"刻意练习"},{id:"b10",period:"8-9月",title:"影响力"},
+  {id:"b11",period:"8-9月",title:"精益创业"},{id:"b12",period:"8-9月",title:"定位"},
+  {id:"b13",period:"10-12月",title:"蛤蟆先生去看心理医生"},{id:"b14",period:"10-12月",title:"苏菲的世界"},
+  {id:"b15",period:"10-12月",title:"活出生命的意义"},
+  {id:"b16",period:"1-2月",title:"人类简史"},{id:"b17",period:"1-2月",title:"高效能人士的七个习惯"},
+  {id:"b18",period:"1-2月",title:"金字塔原理"},{id:"b19",period:"1-2月",title:"少有人走的路"},
+  {id:"b20",period:"2-3月",title:"亲密关系"},{id:"b21",period:"2-3月",title:"正面管教"},
+  {id:"b22",period:"2-3月",title:"你就是孩子最好的玩具"},{id:"b23",period:"2-3月",title:"幸福的方法"},
+];
+
+// ═══════════════════════════════════════════
+// BEIJING TIME
+// ═══════════════════════════════════════════
+function bjNow() {
+  // Always use UTC+8 regardless of user's local timezone
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  return new Date(utc + 8 * 3600000);
+}
+function bjToday() {
+  const d = bjNow();
+  return d.getFullYear()+'-'+S(d.getMonth()+1)+'-'+S(d.getDate());
+}
+function bjDateLabel() {
+  const d = bjNow();
+  const w = ['日','一','二','三','四','五','六'][d.getDay()];
+  return (d.getMonth()+1)+'月'+d.getDate()+'日 周'+w;
+}
+function bjFullLabel() {
+  const d = bjNow();
+  const w = ['日','一','二','三','四','五','六'][d.getDay()];
+  return d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日 周'+w;
+}
+function bjMonth() { return bjNow().getMonth()+1; }
+function bjIsWeekend() { return [0,6].includes(bjNow().getDay()); }
+function S(n) { return String(n).padStart(2,'0'); }
+
+function getPhase() {
+  const m = bjMonth();
+  if(m>=4&&m<=5)return'A';if(m>=6&&m<=9)return'B';if(m>=10&&m<=12)return'C';return'D';
+}
+function getQuarter() {
+  const m = bjMonth();
+  if(m>=4&&m<=6)return'Q2';if(m>=7&&m<=9)return'Q3';if(m>=10&&m<=12)return'Q4';return'Q1n';
+}
+function phaseName(p) {
+  return{A:'A·基础建设期(5-6月)',B:'B·专项突破期(7-8月)',C:'C·真题冲刺期(9-12月)',D:'D·上岸恢复期(1-3月)'}[p];
+}
+function fmtMin(m) {
+  if(!m||m<=0)return'0';
+  if(m>=60){const h=Math.floor(m/60),r=m%60;return r?h+'h'+r+'m':h+'h';}
+  return m+'m';
+}
+
+// Midnight refresh timer — calculate ms until next BJ midnight
+function scheduleMidnightRefresh() {
+  const now = bjNow();
+  const tomorrow = new Date(now);
+  tomorrow.setDate(tomorrow.getDate()+1);
+  tomorrow.setHours(0,0,0,0);
+  const ms = tomorrow.getTime() - now.getTime();
+  setTimeout(()=>{ location.reload(); }, Math.max(ms, 1000));
+  // Also check every 60s if date changed (backup)
+  setInterval(()=>{
+    if(bjToday() !== currentDateKey){location.reload();}
+  }, 60000);
+}
+
+// ═══════════════════════════════════════════
+// STORAGE
+// ═══════════════════════════════════════════
+const SK = 'launch2026';
+function load(){try{return JSON.parse(localStorage.getItem(SK))||def();}catch{return def();}}
+function save(){localStorage.setItem(SK,JSON.stringify(D));}
+function def(){return{logs:{},milestones:{},books:{},nextActions:{},weekNotes:{}};}
+let D = load();
+const currentDateKey = bjToday();
+
+// ═══════════════════════════════════════════
+// STREAK
+// ═══════════════════════════════════════════
+function streak(tid) {
+  let s=0;
+  const d=bjNow();
+  for(let i=0;i<365;i++){
+    const dd=new Date(d);dd.setDate(dd.getDate()-i);
+    const k=dd.getFullYear()+'-'+S(dd.getMonth()+1)+'-'+S(dd.getDate());
+    const log=D.logs[k];
+    if(log&&(log[tid]||0)>0)s++;
+    else if(i===0)continue;
+    else break;
+  }
+  return s;
+}
+
+// ═══════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════
+const TAB_CFG = [
+  {id:'Today',label:'今日打卡',icon:'📋'},
+  {id:'Milestone',label:'里程碑',icon:'🏔'},
+  {id:'Reading',label:'阅读',icon:'📚'},
+  {id:'History',label:'历史',icon:'📊'},
+  {id:'Data',label:'数据',icon:'⚙️'},
+];
+let activeTab = 'Today';
+function renderTabs(){
+  document.getElementById('tabs').innerHTML = TAB_CFG.map(t=>
+    `<button class="tab${t.id===activeTab?' on':''}" onclick="switchTab('${t.id}')">${t.icon} ${t.label}</button>`
+  ).join('');
+}
+function switchTab(id){
+  activeTab=id;
+  renderTabs();
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('panel'+id).classList.add('on');
+  renderPanel(id);
+}
+function renderPanel(id){
+  ({Today:renderToday,Milestone:renderMilestone,Reading:renderReading,History:renderHistory,Data:renderData})[id]();
+}
+
+// ═══════════════════════════════════════════
+// TODAY
+// ═══════════════════════════════════════════
+function renderToday(){
+  const el = document.getElementById('panelToday');
+  const key = currentDateKey;
+  if(!D.logs[key])D.logs[key]={};
+  const log = D.logs[key];
+  const phase = getPhase();
+  const totalMin = Object.values(log).reduce((a,b)=>a+(b||0),0);
+  const doneCount = TASKS.filter(t=>(log[t.id]||0)>0).length;
+  const activeCount = TASKS.filter(t=>t.phases[phase]>0).length;
+  const allDays = Object.keys(D.logs).filter(k=>{const l=D.logs[k];return l&&Object.values(l).some(v=>v>0);}).length;
+
+  // Countdown to midnight BJ time
+  const now = bjNow();
+  const midnight = new Date(now);midnight.setDate(midnight.getDate()+1);midnight.setHours(0,0,0,0);
+  const diffMs = midnight-now;
+  const diffH = Math.floor(diffMs/3600000);
+  const diffM = Math.floor((diffMs%3600000)/60000);
+
+  let html = `
+    <div class="hdr">
+      <div class="hdr-phase">${phaseName(phase)}</div>
+      <div class="hdr-date">${bjFullLabel()}</div>
+      <div class="hdr-sub">北京时间 · 0点自动刷新</div>
+      <div class="hdr-stats">
+        <span class="hdr-chip">已完成 <b>${doneCount}/${activeCount}</b></span>
+        <span class="hdr-chip">投入 <b>${fmtMin(totalMin)}</b></span>
+        <span class="hdr-chip">累计 <b>${allDays}</b> 天</span>
+      </div>
+    </div>
+    <div class="countdown">距新一天还有 <span>${diffH}小时${diffM}分钟</span></div>
+    <div class="task-list">
+  `;
+
+  TASKS.forEach(t=>{
+    const target = t.phases[phase];
+    const skip = target===0;
+    const mins = log[t.id]||0;
+    const done = mins>0;
+    const s = streak(t.id);
+    const na = (D.nextActions||{})[t.id]||'';
+    const ph = {xingce:'例：判断推理-逻辑判断第3章',shenlun:'例：周一·读评论画结构',exam:'例：资料分析第3章',body:'例：跟练Day12',amazon:'例：优化铃铛Listing关键词',reading:'例：置身事内第3章',procreate:'例：圣诞风格插画',felt:'例：戳羊毛毡小星星'}[t.id]||'';[t.id]||'';
+
+    html += `<div class="task${done?' done':''}${skip?' skip':''}" style="${done?'border-left-color:'+t.color:''}">
+      <div class="task-top">
+        <div class="task-check" style="${done?'background:'+t.color:''}" onclick="toggleTask('${t.id}')">${done?'✓':''}</div>
+        <div class="task-info">
+          <div class="task-name">
+            ${t.emoji} ${t.name}
+            ${s>1?'<span class="streak">🔥'+s+'天</span>':''}
+          </div>
+          <div class="task-meta">${skip?'本阶段暂停':'目标 '+t.labels[phase]+'/天'}</div>
+        </div>
+      </div>
+      ${done?`<div class="task-time">
+        <span style="font-size:9px;color:var(--ink4);margin-right:2px">实际</span>
+        <button class="t-btn" onclick="adjTime('${t.id}',-15)">-15</button>
+        <button class="t-btn" onclick="adjTime('${t.id}',-5)">-5</button>
+        <span class="t-val" style="color:${t.color}">${fmtMin(mins)}</span>
+        <button class="t-btn" onclick="adjTime('${t.id}',5)">+5</button>
+        <button class="t-btn" onclick="adjTime('${t.id}',15)">+15</button>
+      </div>`:''}
+      ${!skip?`<div class="task-next">
+        <label>下一步</label>
+        <input value="${esc(na)}" placeholder="${ph}" oninput="setNext('${t.id}',this.value)">
+      </div>`:''}
+    </div>`;
+  });
+
+  html += `</div>`;
+
+  // Week note
+  const wk = getWeekKey();
+  html += `
+    <div class="slabel" style="color:var(--blue)">本周小结</div>
+    <div class="wnote">
+      <div style="font-size:11px;color:var(--ink4);margin-bottom:4px">完成了什么？卡在哪？下周最重要的事？</div>
+      <textarea id="weekNoteArea" placeholder="周日花5分钟写三句话...">${esc((D.weekNotes||{})[wk]||'')}</textarea>
+    </div>
+  `;
+
+  el.innerHTML = html;
+  const ta = document.getElementById('weekNoteArea');
+  if(ta) ta.addEventListener('input',function(){if(!D.weekNotes)D.weekNotes={};D.weekNotes[wk]=this.value;save();});
+}
+
+function getWeekKey(){const d=bjNow();const y=d.getFullYear();const jan1=new Date(y,0,1);const w=Math.ceil(((d-jan1)/86400000+jan1.getDay()+1)/7);return y+'-W'+S(w);}
+
+function toggleTask(tid){
+  const key=currentDateKey;if(!D.logs[key])D.logs[key]={};
+  const log=D.logs[key];
+  if((log[tid]||0)>0){log[tid]=0;}
+  else{const t=TASKS.find(x=>x.id===tid);log[tid]=t.phases[getPhase()]||30;}
+  save();renderToday();
+}
+function adjTime(tid,d){
+  const log=D.logs[currentDateKey];
+  log[tid]=Math.max(5,(log[tid]||0)+d);
+  save();renderToday();
+}
+function setNext(tid,v){if(!D.nextActions)D.nextActions={};D.nextActions[tid]=v;save();}
+
+// ═══════════════════════════════════════════
+// MILESTONE
+// ═══════════════════════════════════════════
+function renderMilestone(){
+  const el=document.getElementById('panelMilestone');
+  const q=getQuarter();
+  const order=['Q2','Q3','Q4','Q1n'];
+  let html=`
+    <div class="hdr" style="padding-bottom:8px">
+      <div class="hdr-date">🏔 里程碑追踪</div>
+      <div class="hdr-sub">点击数字更新进度</div>
+    </div>
+    <div style="background:var(--red-l);border-radius:var(--r-sm);padding:8px 12px;margin-bottom:12px;font-size:11px;color:var(--ink2);line-height:1.6">
+      <b>🧘 体态课追踪方式：</b>按累计小时数填写。例：今天看了2节课共50分钟 → 在当前值上加0.8h（50÷60≈0.8）。理论课24h先完成，再开始跟练课55h。
+    </div>`;
+
+  order.forEach(qr=>{
+    const ms=MILESTONES.filter(m=>m.phase===qr);
+    const isCur=qr===q;
+    const qLabel={Q2:'Q2·4-6月',Q3:'Q3·7-9月',Q4:'Q4·10-12月',Q1n:"Q1'27·1-3月"}[qr];
+    html+=`<div class="slabel" style="color:${isCur?'var(--red)':'var(--ink3)'}">${isCur?'● 当前 ':' '}${qLabel}</div>`;
+    ms.forEach(m=>{
+      const t=TASKS.find(x=>x.id===m.task);
+      const cur=(D.milestones||{})[m.id]||0;
+      const pct=Math.min(100,Math.round(cur/m.target*100));
+      const done=pct>=100;
+      html+=`<div class="ms${done?' ms-done':''}" style="${done?'border-left-color:'+(t?.color||'#ccc'):''}${!isCur?';opacity:.55':''}">
+        <div class="ms-top">
+          <div class="ms-name">${t?.emoji||''} ${m.label}</div>
+          <div class="ms-due">${m.due} ${done?'✅':''}</div>
+        </div>
+        <div class="ms-bar"><div class="ms-fill" style="width:${pct}%;background:${t?.color||'#ccc'}"></div></div>
+        <div class="ms-bot">
+          <div class="ms-pct" style="color:${t?.color||'#999'}">${pct}%</div>
+          <div style="display:flex;align-items:center;gap:3px">
+            <input class="ms-input" type="number" value="${cur}" min="0" step="${m.unit==='h'?0.5:1}" style="color:${t?.color||''}"
+              oninput="setMs('${m.id}',this.value)">
+            <span class="ms-unit">/ ${m.target}${m.unit}</span>
+          </div>
+        </div>
+      </div>`;
+    });
+  });
+  el.innerHTML=html;
+}
+function setMs(id,v){if(!D.milestones)D.milestones={};D.milestones[id]=Math.max(0,parseFloat(v)||0);save();renderMilestone();}
+
+// ═══════════════════════════════════════════
+// READING
+// ═══════════════════════════════════════════
+function renderReading(){
+  const el=document.getElementById('panelReading');
+  const br=D.books||{};
+  const done=Object.values(br).filter(Boolean).length;
+  const periods=[...new Set(BOOKS.map(b=>b.period))];
+  let html=`
+    <div class="hdr" style="padding-bottom:8px">
+      <div class="hdr-date">📚 阅读进度</div>
+      <div class="hdr-sub">已读 <b style="color:var(--blue)">${done}</b> / ${BOOKS.length} 本 · 点击标记已读</div>
+    </div>`;
+  periods.forEach(p=>{
+    html+=`<div class="slabel" style="color:var(--red)">${p}</div>`;
+    BOOKS.filter(b=>b.period===p).forEach(b=>{
+      const rd=br[b.id];
+      html+=`<div class="book${rd?' read':''}" onclick="toggleBook('${b.id}')">
+        <div class="book-check" style="${rd?'background:var(--blue)':''}"> ${rd?'✓':''}</div>
+        <span class="book-title">《${b.title}》</span>
+      </div>`;
+    });
+  });
+  el.innerHTML=html;
+}
+function toggleBook(id){if(!D.books)D.books={};D.books[id]=!D.books[id];save();renderReading();}
+
+// ═══════════════════════════════════════════
+// HISTORY
+// ═══════════════════════════════════════════
+function renderHistory(){
+  const el=document.getElementById('panelHistory');
+  const allKeys=Object.keys(D.logs||{}).filter(k=>{const l=D.logs[k];return l&&Object.values(l).some(v=>v>0);}).sort().reverse();
+  const totalDays=allKeys.length;
+  const totalMin=allKeys.reduce((s,k)=>s+Object.values(D.logs[k]||{}).reduce((a,b)=>a+(b||0),0),0);
+
+  let html=`
+    <div class="hdr" style="padding-bottom:8px">
+      <div class="hdr-date">📊 打卡历史</div>
+      <div class="hdr-sub">累计 <b>${totalDays}</b> 天 · 总投入 <b>${Math.floor(totalMin/60)}</b> 小时</div>
+    </div>`;
+
+  // 14-day heat grid
+  html+=`<div class="slabel" style="color:var(--teal)">最近14天</div>`;
+  html+=`<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px;overflow-x:auto;box-shadow:var(--shadow);margin-bottom:12px">`;
+
+  const days=[];
+  for(let i=13;i>=0;i--){
+    const dd=new Date(bjNow());dd.setDate(dd.getDate()-i);
+    const k=dd.getFullYear()+'-'+S(dd.getMonth()+1)+'-'+S(dd.getDate());
+    const w=['日','一','二','三','四','五','六'][dd.getDay()];
+    days.push({key:k,label:(dd.getMonth()+1)+'/'+dd.getDate(),w,log:D.logs[k]||{}});
+  }
+
+  const cols = 'minmax(56px,auto) '+days.map(()=>'1fr').join(' ');
+  html+=`<div class="heat-grid" style="grid-template-columns:${cols}">`;
+  // header
+  html+=`<div></div>`;
+  days.forEach(d=>html+=`<div class="day-header">${d.label}<br>${d.w}</div>`);
+  // rows
+  TASKS.forEach(t=>{
+    html+=`<div style="font-size:10px;font-weight:600;display:flex;align-items:center;gap:3px;padding:0 2px">${t.emoji}</div>`;
+    days.forEach(d=>{
+      const v=d.log[t.id]||0;
+      const op=v===0?0.08:v<30?.3:v<60?.5:v<120?.75:1;
+      html+=`<div class="heat-cell" style="background:${t.color};opacity:${op}">${v>0?fmtMin(v):''}</div>`;
+    });
+  });
+  html+=`</div></div>`;
+
+  // Detail cards for recent days
+  html+=`<div class="slabel" style="color:var(--blue)">逐日详情</div>`;
+  const showDays = allKeys.slice(0,30);
+  if(showDays.length===0){
+    html+=`<div style="text-align:center;color:var(--ink4);padding:20px;font-size:13px">还没有打卡记录，去「今日打卡」开始吧</div>`;
+  } else {
+    showDays.forEach(k=>{
+      const log=D.logs[k];
+      const dt=new Date(k+'T00:00:00');
+      const w=['日','一','二','三','四','五','六'][dt.getDay()];
+      const totalM=Object.values(log).reduce((a,b)=>a+(b||0),0);
+      const items=TASKS.filter(t=>(log[t.id]||0)>0);
+      html+=`<div class="hist-card">
+        <div class="hist-date">
+          <span>${(dt.getMonth()+1)}/${dt.getDate()} 周${w}</span>
+          <span style="font-size:12px;color:var(--ink3)">${fmtMin(totalM)}</span>
+        </div>
+        <div class="hist-items">
+          ${items.map(t=>`<span class="hist-tag" style="background:${t.bg};color:${t.color}">${t.emoji}${fmtMin(log[t.id])}</span>`).join('')}
+          ${items.length===0?'<span style="font-size:11px;color:var(--ink4)">无记录</span>':''}
+        </div>
+      </div>`;
+    });
+  }
+
+  // Week notes
+  const wns=Object.entries(D.weekNotes||{}).sort().reverse().slice(0,6);
+  if(wns.length>0){
+    html+=`<div class="slabel" style="color:var(--orange)">周回顾</div>`;
+    wns.forEach(([wk,note])=>{
+      if(note)html+=`<div class="hist-card"><div class="hist-date">${wk}</div><div style="font-size:12px;color:var(--ink2)">${esc(note)}</div></div>`;
+    });
+  }
+
+  el.innerHTML=html;
+}
+
+// ═══════════════════════════════════════════
+// DATA MANAGEMENT
+// ═══════════════════════════════════════════
+function renderData(){
+  const el=document.getElementById('panelData');
+  const size = new Blob([JSON.stringify(D)]).size;
+  el.innerHTML=`
+    <div class="hdr" style="padding-bottom:8px">
+      <div class="hdr-date">⚙️ 数据管理</div>
+      <div class="hdr-sub">数据保存在浏览器本地 · 当前大小 ${(size/1024).toFixed(1)}KB</div>
+    </div>
+    <div class="slabel" style="color:var(--teal)">备份与恢复</div>
+    <div style="font-size:12px;color:var(--ink2);margin-bottom:10px;line-height:1.7">
+      数据存储在当前浏览器的 localStorage 中。换浏览器或清除浏览数据会丢失记录。<br>
+      <strong>建议每月导出一次备份。</strong>换设备时可通过导入恢复。
+    </div>
+    <div class="data-btns">
+      <button class="data-btn" onclick="exportJSON()">📦 导出备份</button>
+      <label class="data-btn">📥 导入数据<input type="file" accept=".json" onchange="importJSON(event)" style="display:none"></label>
+      <button class="data-btn danger" onclick="resetData()">🗑 重置所有数据</button>
+    </div>
+    <div class="slabel" style="color:var(--ink3);margin-top:24px">关于自动更新</div>
+    <div style="font-size:12px;color:var(--ink2);line-height:1.8">
+      页面使用<strong>北京时间(UTC+8)</strong>判断日期，无论你在哪个时区。<br>
+      每天北京时间0:00会自动刷新页面，切换到新一天。<br>
+      如果你长时间不关闭页面，页面也会每分钟检查一次日期是否变化，自动刷新。<br>
+      <strong>不需要手动刷新</strong>——午夜时分页面会自动重置为新一天的空白打卡。
+    </div>
+  `;
+}
+function exportJSON(){
+  const b=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download='2026-启动台备份-'+currentDateKey+'.json';a.click();
+}
+function importJSON(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=function(ev){
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(d.logs){D=d;save();alert('导入成功！页面将刷新。');location.reload();}
+      else alert('文件格式不正确');
+    }catch{alert('解析失败');}
+  };
+  r.readAsText(f);
+}
+function resetData(){
+  if(confirm('确定要清除所有打卡数据吗？\n此操作不可撤销！')){
+    if(confirm('再次确认：所有打卡记录、里程碑进度、阅读记录都将被清除。')){
+      localStorage.removeItem(SK);location.reload();
+    }
+  }
+}
+
+// ═══════════════════════════════════════════
+// UTILS & INIT
+// ═══════════════════════════════════════════
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// Init
+renderTabs();
+renderToday();
+scheduleMidnightRefresh();
+
+// Update countdown every minute
+setInterval(()=>{
+  const cd=document.querySelector('.countdown');
+  if(cd&&activeTab==='Today'){
+    const now=bjNow();
+    const mn=new Date(now);mn.setDate(mn.getDate()+1);mn.setHours(0,0,0,0);
+    const ms=mn-now;const h=Math.floor(ms/3600000);const m=Math.floor((ms%3600000)/60000);
+    cd.innerHTML=`距新一天还有 <span>${h}小时${m}分钟</span>`;
+  }
+},60000);
+</script>
+
+</body>
+</html>

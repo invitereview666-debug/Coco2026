@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Procreate 精通指南 · 从小白到自主设计</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0d0f;
+  --bg2: #141418;
+  --bg3: #1c1c22;
+  --bg4: #242430;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text: #e8e6f0;
+  --text2: #9994b0;
+  --text3: #5c5875;
+  --purple: #a78bfa;
+  --purple-d: #7c3aed;
+  --purple-l: #ede9fe;
+  --pink: #f472b6;
+  --pink-d: #be185d;
+  --teal: #2dd4bf;
+  --teal-d: #0f766e;
+  --amber: #fbbf24;
+  --amber-d: #d97706;
+  --blue: #60a5fa;
+  --blue-d: #1d4ed8;
+  --green: #4ade80;
+  --green-d: #16a34a;
+  --coral: #fb7185;
+
+  --sans: 'Space Grotesk', sans-serif;
+  --serif: 'Playfair Display', Georgia, serif;
+  --mono: 'JetBrains Mono', monospace;
+  --r: 8px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── SCROLL BAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--purple-d); border-radius: 99px; }
+
+/* ── PROGRESS LINE ── */
+#progress-line {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  z-index: 999; transition: width 0.1s;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,13,15,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0;
+  padding: 0 2rem;
+  overflow-x: auto; scrollbar-width: none;
+}
+nav::-webkit-scrollbar { display: none; }
+.nav-logo {
+  font-family: var(--mono); font-size: 12px; color: var(--purple);
+  padding: 14px 20px 14px 0; border-right: 1px solid var(--border);
+  margin-right: 4px; white-space: nowrap; letter-spacing: 0.06em;
+}
+nav a {
+  color: var(--text3); text-decoration: none; font-size: 12px;
+  padding: 14px 13px; white-space: nowrap; transition: color 0.2s;
+  letter-spacing: 0.02em; font-weight: 500;
+}
+nav a:hover { color: var(--text2); }
+nav a.active { color: var(--purple); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding: 6rem 2rem 4rem; position: relative; overflow: hidden;
+}
+.hero-glow {
+  position: absolute; width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%, -60%);
+  pointer-events: none;
+}
+.hero-glow2 {
+  position: absolute; width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(244,114,182,0.1) 0%, transparent 70%);
+  bottom: 10%; right: 10%; pointer-events: none;
+}
+.hero-badge {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+  color: var(--purple); background: rgba(124,58,237,0.12);
+  border: 1px solid rgba(124,58,237,0.3);
+  padding: 5px 14px; border-radius: 99px; margin-bottom: 2rem;
+  display: inline-block;
+}
+.hero h1 {
+  font-family: var(--serif); font-size: clamp(2.4rem,6vw,4.5rem);
+  font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem;
+  background: linear-gradient(135deg, #fff 30%, var(--purple) 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 16px; color: var(--text2); max-width: 580px;
+  margin: 0 auto 3rem; line-height: 1.7;
+}
+.hero-stats {
+  display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.stat { text-align: center; }
+.stat-n {
+  font-family: var(--mono); font-size: 28px; font-weight: 500;
+  color: var(--purple); display: block; line-height: 1;
+}
+.stat-l { font-size: 12px; color: var(--text3); margin-top: 4px; }
+.hero-cta {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+}
+.btn-primary {
+  background: var(--purple-d); color: #fff; border: none;
+  padding: 11px 24px; border-radius: var(--r); font-size: 14px;
+  font-family: var(--sans); font-weight: 500; cursor: pointer;
+  text-decoration: none; transition: opacity 0.2s;
+}
+.btn-primary:hover { opacity: 0.85; }
+.btn-ghost {
+  background: transparent; color: var(--text2);
+  border: 1px solid var(--border2);
+  padding: 11px 24px; border-radius: var(--r); font-size: 14px;
+  font-family: var(--sans); cursor: pointer; text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-ghost:hover { border-color: var(--purple); color: var(--purple); }
+
+/* ── GRID TRACKER ── */
+.tracker-section {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 0;
+}
+.container { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem; }
+.section-eyebrow {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+  color: var(--purple); text-transform: uppercase; margin-bottom: 6px;
+}
+.section-title {
+  font-family: var(--serif); font-size: clamp(1.6rem,3vw,2.4rem);
+  font-weight: 700; margin-bottom: 0.5rem; line-height: 1.2;
+}
+.section-desc { color: var(--text2); font-size: 14px; max-width: 520px; margin-bottom: 2rem; line-height: 1.65; }
+
+.tracker-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.tracker-card {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 16px;
+  transition: border-color 0.2s;
+}
+.tracker-card:hover { border-color: var(--border2); }
+.tc-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.tc-name { font-size: 13px; font-weight: 600; }
+.tc-pct { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+.pbar { height: 4px; background: var(--bg4); border-radius: 99px; overflow: hidden; margin-bottom: 12px; }
+.pfill { height: 100%; border-radius: 99px; transition: width 0.6s cubic-bezier(.4,0,.2,1); }
+.milestone-row { display: flex; gap: 5px; flex-wrap: wrap; }
+.ms {
+  font-family: var(--mono); font-size: 9px; padding: 4px 7px;
+  border-radius: 5px; border: 1px solid var(--border2);
+  color: var(--text3); cursor: pointer; transition: all 0.2s;
+  user-select: none;
+}
+.ms:hover { border-color: var(--purple); color: var(--purple); }
+.ms.done { color: #fff; border-color: transparent; }
+.tc-phase { font-size: 10px; color: var(--text3); margin-top: 8px; }
+
+/* ── SECTION ── */
+.section {
+  padding: 5rem 0 4rem;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+
+/* ── PHASE CARDS ── */
+.phase-grid { display: grid; gap: 2px; margin-bottom: 2.5rem; }
+.phase-item {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 0; overflow: hidden;
+  transition: border-color 0.2s;
+}
+.phase-item:hover { border-color: var(--border2); }
+.phase-trigger {
+  width: 100%; display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px; background: none; border: none;
+  color: var(--text); cursor: pointer; text-align: left;
+}
+.phase-num {
+  font-family: var(--mono); font-size: 11px; color: var(--text3);
+  min-width: 32px;
+}
+.phase-label { flex: 1; }
+.phase-name { font-size: 14px; font-weight: 600; }
+.phase-time { font-size: 12px; color: var(--text3); margin-top: 1px; }
+.phase-badge {
+  font-size: 10px; font-family: var(--mono); padding: 3px 9px;
+  border-radius: 99px; white-space: nowrap;
+}
+.phase-chevron { color: var(--text3); transition: transform 0.2s; font-size: 12px; }
+.phase-item.open .phase-chevron { transform: rotate(180deg); }
+.phase-body {
+  display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);
+}
+.phase-body.open { display: block; }
+
+/* ── TOOLS TABLE ── */
+.tools-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+  margin-bottom: 2rem;
+}
+.tools-table th {
+  background: var(--bg3); color: var(--text3); padding: 9px 14px;
+  text-align: left; font-size: 10px; font-family: var(--mono);
+  letter-spacing: 0.08em; font-weight: 400; border-bottom: 1px solid var(--border);
+}
+.tools-table td {
+  padding: 10px 14px; border-bottom: 1px solid var(--border);
+  color: var(--text2); vertical-align: top; line-height: 1.5;
+}
+.tools-table tr:last-child td { border-bottom: none; }
+.tools-table tr:hover td { background: var(--bg3); }
+.tools-table td:first-child { color: var(--text); font-weight: 500; }
+.tag {
+  display: inline-block; font-size: 10px; padding: 2px 8px;
+  border-radius: 4px; font-family: var(--mono);
+  margin: 1px; white-space: nowrap;
+}
+
+/* ── RESOURCE CARDS ── */
+.res-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+  gap: 12px; margin-bottom: 2rem;
+}
+.res-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 16px;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.res-card:hover { border-color: var(--border2); transform: translateY(-1px); }
+.res-type { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
+.res-name { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+.res-desc { font-size: 12px; color: var(--text2); line-height: 1.55; }
+.res-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; }
+
+/* ── COLOR SYSTEM ── */
+.palette-grid { display: grid; gap: 14px; margin-bottom: 2rem; }
+.palette-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 18px; display: grid;
+  grid-template-columns: 1fr auto; gap: 16px; align-items: start;
+}
+.pal-info {}
+.pal-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.pal-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+.pal-use { font-size: 11px; color: var(--text3); margin-top: 6px; font-family: var(--mono); }
+.pal-swatches { display: flex; gap: 5px; align-items: flex-end; flex-shrink: 0; }
+.swatch-w { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.sw { border-radius: 5px; }
+.sw-code { font-family: var(--mono); font-size: 8px; color: var(--text3); }
+
+/* ── WORKFLOW ── */
+.workflow-steps { display: grid; gap: 12px; margin-bottom: 2rem; }
+.ws {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 16px;
+}
+.ws-num {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  flex-shrink: 0;
+}
+.ws-body { flex: 1; }
+.ws-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.ws-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+.ws-tip { font-size: 12px; color: var(--text3); margin-top: 6px; font-family: var(--mono); }
+
+/* ── BRUSH GUIDE ── */
+.brush-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+  gap: 10px; margin-bottom: 2rem;
+}
+.brush-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 14px; text-align: center;
+}
+.brush-icon { font-size: 24px; margin-bottom: 8px; }
+.brush-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.brush-cat { font-family: var(--mono); font-size: 10px; color: var(--text3); margin-bottom: 5px; }
+.brush-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
+
+/* ── INSIGHT ── */
+.insight {
+  border-left: 2px solid; padding: 14px 18px; margin: 1.5rem 0;
+  border-radius: 0 var(--r) var(--r) 0;
+  font-size: 13px; line-height: 1.65; color: var(--text2);
+}
+.insight strong { font-weight: 600; }
+
+/* ── CHECKLIST ── */
+.checklist { list-style: none; margin-bottom: 2rem; }
+.cl-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 12px; border-radius: var(--r); cursor: pointer;
+  transition: background 0.15s; font-size: 13px;
+  border-bottom: 1px solid var(--border);
+}
+.cl-item:last-child { border-bottom: none; }
+.cl-item:hover { background: var(--bg3); }
+.cl-item.done { text-decoration: line-through; color: var(--text3); }
+.cl-box {
+  width: 18px; height: 18px; border: 1.5px solid var(--border2);
+  border-radius: 4px; flex-shrink: 0; margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; transition: all 0.2s;
+}
+.cl-item.done .cl-box { background: var(--green-d); border-color: var(--green-d); color: #fff; }
+
+/* ── KEYBOARD SHORTCUT ── */
+.shortcut-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+  gap: 8px; margin-bottom: 2rem;
+}
+.shortcut-row {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 9px 12px;
+}
+.shortcut-action { font-size: 12px; color: var(--text2); }
+.shortcut-key {
+  font-family: var(--mono); font-size: 11px;
+  background: var(--bg4); border: 1px solid var(--border2);
+  border-radius: 4px; padding: 2px 7px; color: var(--text);
+}
+
+/* ── LAYER MODES TABLE ── */
+.layer-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+  gap: 10px; margin-bottom: 2rem;
+}
+.layer-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 12px;
+}
+.layer-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.layer-use { font-size: 11px; color: var(--text2); line-height: 1.45; }
+.layer-tip { font-size: 10px; color: var(--text3); margin-top: 5px; font-family: var(--mono); }
+
+/* ── CRAFT INTEGRATION ── */
+.craft-cards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap: 12px; margin-bottom: 2rem;
+}
+.craft-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r-lg); overflow: hidden;
+}
+.craft-head { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.craft-title { font-size: 14px; font-weight: 600; }
+.craft-subtitle { font-size: 11px; color: var(--text3); margin-top: 2px; font-family: var(--mono); }
+.craft-steps { padding: 12px 16px; }
+.craft-step { font-size: 12px; color: var(--text2); padding: 5px 0; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: flex-start; }
+.craft-step:last-child { border-bottom: none; }
+.cs-arrow { color: var(--text3); font-size: 10px; margin-top: 3px; flex-shrink: 0; }
+
+/* ── DIVIDER ── */
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 2.5rem 0 1.8rem;
+}
+.divider-line { flex: 1; height: 1px; background: var(--border); }
+.divider-label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text3);
+}
+
+/* ── PROCREATE UI MAP ── */
+.ui-map {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 24px; margin-bottom: 2rem;
+  font-size: 13px;
+}
+.ui-row { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.ui-area {
+  flex: 1; min-width: 120px; background: var(--bg3);
+  border: 1px solid var(--border); border-radius: var(--r);
+  padding: 10px 12px;
+}
+.ui-area-name { font-size: 11px; font-weight: 600; margin-bottom: 3px; }
+.ui-area-items { font-size: 11px; color: var(--text3); line-height: 1.5; }
+
+/* ── EXERCISE CARD ── */
+.exercise-list { list-style: none; margin-bottom: 2rem; }
+.exercise-item {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 14px 16px; margin-bottom: 8px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.ex-week {
+  font-family: var(--mono); font-size: 10px; color: var(--text3);
+  white-space: nowrap; margin-top: 2px; min-width: 40px;
+}
+.ex-content { flex: 1; }
+.ex-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.ex-task { font-size: 12px; color: var(--text2); line-height: 1.55; }
+.ex-output { font-size: 11px; font-family: var(--mono); color: var(--text3); margin-top: 5px; }
+.ex-diff { font-size: 10px; padding: 2px 7px; border-radius: 99px; border: 1px solid; white-space: nowrap; margin-top: 1px; flex-shrink: 0; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg2); border-top: 1px solid var(--border);
+  text-align: center; padding: 2rem;
+  font-family: var(--mono); font-size: 11px; color: var(--text3);
+}
+
+@media (max-width: 640px) {
+  .palette-card { grid-template-columns: 1fr; }
+  .pal-swatches { flex-wrap: wrap; }
+  .hero-stats { gap: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress-line"></div>
+
+<nav id="nav">
+  <div class="nav-logo">Procreate · 精通指南</div>
+  <a href="#overview">概览</a>
+  <a href="#setup">设备入门</a>
+  <a href="#foundation">基础技能</a>
+  <a href="#intermediate">中阶进阶</a>
+  <a href="#advanced">自主设计</a>
+  <a href="#color">配色系统</a>
+  <a href="#craft">手工艺整合</a>
+  <a href="#resources">资源库</a>
+  <a href="#tracker">进度追踪</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="overview">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-badge">完整学习手册 · 2025版 · 手工艺设计师专属</div>
+  <h1>Procreate<br>从小白到<em>自主设计</em></h1>
+  <p class="hero-sub">iPad + Apple Pencil 赋能手工艺创作——从第一笔草稿到可销售产品图纸的完整路径，含学习资源、配色系统、四大技艺整合工作流。</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-n">6</span><div class="stat-l">学习阶段</div></div>
+    <div class="stat"><span class="stat-n">24+</span><div class="stat-l">可量化里程碑</div></div>
+    <div class="stat"><span class="stat-n">40+</span><div class="stat-l">精选学习资源</div></div>
+    <div class="stat"><span class="stat-n">∞</span><div class="stat-l">设计可能性</div></div>
+  </div>
+  <div class="hero-cta">
+    <a href="#setup" class="btn-primary">从头开始学 →</a>
+    <a href="#tracker" class="btn-ghost">查看进度追踪</a>
+  </div>
+</section>
+
+<!-- ═══ PROGRESS TRACKER ═══ -->
+<div class="tracker-section" id="tracker">
+  <div class="container">
+    <div class="section-eyebrow">我的学习进度</div>
+    <p style="font-size:11px;color:var(--text3);font-family:var(--mono);margin-bottom:1.5rem">点击里程碑标记完成 · 进度保存在本地浏览器</p>
+    <div class="tracker-grid">
+      <div class="tracker-card">
+        <div class="tc-head"><span class="tc-name" style="color:var(--purple)">设备 & 界面入门</span><span class="tc-pct" id="pct-setup">0%</span></div>
+        <div class="pbar"><div class="pfill" id="fill-setup" style="width:0;background:var(--purple)"></div></div>
+        <div class="milestone-row" id="ms-setup">
+          <div class="ms" onclick="tick('setup',0)">设备齐全</div>
+          <div class="ms" onclick="tick('setup',1)">界面熟悉</div>
+          <div class="ms" onclick="tick('setup',2)">手势掌握</div>
+          <div class="ms" onclick="tick('setup',3)">第一幅画</div>
+        </div>
+        <div class="tc-phase">阶段一 · 第1–2周</div>
+      </div>
+      <div class="tracker-card">
+        <div class="tc-head"><span class="tc-name" style="color:var(--teal)">基础绘图技能</span><span class="tc-pct" id="pct-foundation">0%</span></div>
+        <div class="pbar"><div class="pfill" id="fill-foundation" style="width:0;background:var(--teal)"></div></div>
+        <div class="milestone-row" id="ms-foundation">
+          <div class="ms" onclick="tick('foundation',0)">线条控制</div>
+          <div class="ms" onclick="tick('foundation',1)">图层系统</div>
+          <div class="ms" onclick="tick('foundation',2)">笔刷掌握</div>
+          <div class="ms" onclick="tick('foundation',3)">色彩填充</div>
+          <div class="ms" onclick="tick('foundation',4)">第一件完整作品</div>
+        </div>
+        <div class="tc-phase">阶段二 · 第3–6周</div>
+      </div>
+      <div class="tracker-card">
+        <div class="tc-head"><span class="tc-name" style="color:var(--amber)">中阶技法</span><span class="tc-pct" id="pct-intermediate">0%</span></div>
+        <div class="pbar"><div class="pfill" id="fill-intermediate" style="width:0;background:var(--amber)"></div></div>
+        <div class="milestone-row" id="ms-intermediate">
+          <div class="ms" onclick="tick('intermediate',0)">混合模式</div>
+          <div class="ms" onclick="tick('intermediate',1)">遮罩系统</div>
+          <div class="ms" onclick="tick('intermediate',2)">对称工具</div>
+          <div class="ms" onclick="tick('intermediate',3)">纹理制作</div>
+          <div class="ms" onclick="tick('intermediate',4)">色彩系统</div>
+        </div>
+        <div class="tc-phase">阶段三 · 月2–3</div>
+      </div>
+      <div class="tracker-card">
+        <div class="tc-head"><span class="tc-name" style="color:var(--pink)">设计应用</span><span class="tc-pct" id="pct-design">0%</span></div>
+        <div class="pbar"><div class="pfill" id="fill-design" style="width:0;background:var(--pink)"></div></div>
+        <div class="milestone-row" id="ms-design">
+          <div class="ms" onclick="tick('design',0)">无缝图案</div>
+          <div class="ms" onclick="tick('design',1)">毛毡图纸</div>
+          <div class="ms" onclick="tick('design',2)">刺绣稿</div>
+          <div class="ms" onclick="tick('design',3)">原创系列</div>
+          <div class="ms" onclick="tick('design',4)">商业输出</div>
+        </div>
+        <div class="tc-phase">阶段四 · 月3–6</div>
+      </div>
+      <div class="tracker-card">
+        <div class="tc-head"><span class="tc-name" style="color:var(--blue)">配色设计</span><span class="tc-pct" id="pct-color">0%</span></div>
+        <div class="pbar"><div class="pfill" id="fill-color" style="width:0;background:var(--blue)"></div></div>
+        <div class="milestone-row" id="ms-color">
+          <div class="ms" onclick="tick('color',0)">色轮理解</div>
+          <div class="ms" onclick="tick('color',1)">调色板保存</div>
+          <div class="ms" onclick="tick('color',2)">圣诞配色</div>
+          <div class="ms" onclick="tick('color',3)">品牌色系</div>
+        </div>
+        <div class="tc-phase">贯穿全程</div>
+      </div>
+      <div class="tracker-card">
+        <div class="tc-head"><span class="tc-name" style="color:var(--coral)">品牌输出</span><span class="tc-pct" id="pct-brand">0%</span></div>
+        <div class="pbar"><div class="pfill" id="fill-brand" style="width:0;background:var(--coral)"></div></div>
+        <div class="milestone-row" id="ms-brand">
+          <div class="ms" onclick="tick('brand',0)">产品图拍摄稿</div>
+          <div class="ms" onclick="tick('brand',1)">PDF图纸导出</div>
+          <div class="ms" onclick="tick('brand',2)">社群内容图</div>
+          <div class="ms" onclick="tick('brand',3)">品牌视觉系统</div>
+        </div>
+        <div class="tc-phase">阶段五 · 月4–6</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 1: SETUP ═══ -->
+<section class="section" id="setup">
+  <div class="container">
+    <div class="section-eyebrow">阶段一 · 第1–2周</div>
+    <h2 class="section-title">设备选购 & 界面入门</h2>
+    <p class="section-desc">在摸画笔之前，先把工具和空间设置对。正确的设备搭配能让学习速度提升50%。</p>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">必备设备清单</div><div class="divider-line"></div></div>
+
+    <table class="tools-table">
+      <thead><tr><th>设备</th><th>推荐型号</th><th>价格参考</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>iPad</td>
+          <td>iPad Air 11" (M2) <span class="tag" style="background:rgba(167,139,250,0.15);color:var(--purple)">最推荐</span></td>
+          <td>NT$18,900+</td>
+          <td>M2芯片流畅运行Procreate，屏幕尺寸黄金点，比Pro便宜且够用</td>
+        </tr>
+        <tr>
+          <td>iPad</td>
+          <td>iPad Pro 11" (M4) <span class="tag" style="background:rgba(251,191,36,0.15);color:var(--amber)">最强</span></td>
+          <td>NT$28,900+</td>
+          <td>ProMotion 120Hz屏幕，笔迹更顺滑，适合长期重度使用</td>
+        </tr>
+        <tr>
+          <td>iPad (预算版)</td>
+          <td>iPad 第10代</td>
+          <td>NT$10,900+</td>
+          <td>可用但不支持Apple Pencil 2，需买第1代笔，建议存钱买Air</td>
+        </tr>
+        <tr>
+          <td>触控笔</td>
+          <td>Apple Pencil Pro <span class="tag" style="background:rgba(167,139,250,0.15);color:var(--purple)">最推荐</span></td>
+          <td>NT$3,990</td>
+          <td>支持倾斜感应、桶身滚动，与M2 iPad Air/Pro完美搭配</td>
+        </tr>
+        <tr>
+          <td>触控笔</td>
+          <td>Apple Pencil 2代</td>
+          <td>NT$2,990</td>
+          <td>仍是极佳选择，支持倾斜感应，与Air/Pro兼容</td>
+        </tr>
+        <tr>
+          <td>保护膜</td>
+          <td>Paperlike 磨砂膜 <span class="tag" style="background:rgba(74,222,128,0.15);color:var(--green)">强烈推荐</span></td>
+          <td>NT$900–1,200</td>
+          <td>模拟纸张阻力感，大幅提升手感，贴了才有「在纸上画画」的感觉</td>
+        </tr>
+        <tr>
+          <td>App</td>
+          <td>Procreate 5.3+</td>
+          <td>NT$349（买断）</td>
+          <td>App Store 一次购买，终身更新，无订阅费，价格极划算</td>
+        </tr>
+        <tr>
+          <td>支架</td>
+          <td>Lamicall / Twelve South</td>
+          <td>NT$600–1,200</td>
+          <td>固定倾斜角度，长时间创作保护颈椎手腕，强烈建议入手</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="insight" style="border-color:var(--purple);background:rgba(167,139,250,0.06)">
+      <strong style="color:var(--purple)">核心建议：</strong>贴Paperlike磨砂膜是最被低估的投资。裸屏手感太滑，笔迹控制差，新手容易沮丧。贴膜后手感接近在Moleskine上画画，学习速度会明显提升。
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">Procreate 界面地图</div><div class="divider-line"></div></div>
+
+    <div class="ui-map">
+      <div style="font-size:11px;color:var(--text3);margin-bottom:16px;font-family:var(--mono)">主界面区域划分（从上到下、从左到右）</div>
+      <div class="ui-row">
+        <div class="ui-area">
+          <div class="ui-area-name" style="color:var(--purple)">左上工具栏</div>
+          <div class="ui-area-items">修改 (S形) · 选取 · 变换<br>三大最常用工具</div>
+        </div>
+        <div class="ui-area">
+          <div class="ui-area-name" style="color:var(--teal)">右上工具栏</div>
+          <div class="ui-area-items">笔刷 · 涂抹 · 橡皮 · 图层 · 颜色<br>右手高频区</div>
+        </div>
+      </div>
+      <div class="ui-row">
+        <div class="ui-area">
+          <div class="ui-area-name" style="color:var(--amber)">左侧滑杆</div>
+          <div class="ui-area-items">上方：笔刷尺寸（拖动调整）<br>下方：笔刷不透明度<br>中间按钮：撤销/重做</div>
+        </div>
+        <div class="ui-area" style="flex:3">
+          <div class="ui-area-name" style="color:var(--blue)">画布区（主体）</div>
+          <div class="ui-area-items">全屏画布 · 双指缩放旋转 · 三指清除 · 捏合打开图库</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">必学手势（前两周必须记住）</div><div class="divider-line"></div></div>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-row"><span class="shortcut-action">撤销上一步</span><span class="shortcut-key">双指点按</span></div>
+      <div class="shortcut-row"><span class="shortcut-action">重做</span><span class="shortcut-key">三指点按</span></div>
+      <div class="shortcut-row"><span class="shortcut-action">清除当前图层</span><span class="shortcut-key">三指擦除</span></div>
+      <div class="shortcut-row"><span class="shortcut-action">缩放画布</span><span class="shortcut-key">双指捏合</span></div>
+      <div class="shortcut-row"><span class="shortcut-action">旋转画布</span><span class="shortcut-key">双指旋转</span></div>
+      <div class="shortcut-row"><span class="shortcut-action">全屏模式</span><span class="shortcut-key">四指点按</span></div>
+      <div class="shortcut-row"><span class="shortcut-action">快速颜色填充</span><span class="shortcut-key">拖拽颜色到区域</span></div>
+      <div class="shortcut-row"><span class="shortcut-action">拾取颜色</span><span class="shortcut-key">长按画布</span></div>
+      <div class="shortcut-row"><span class="shortcut-action">直线/完美图形</span><span class="shortcut-key">画完后按住</span></div>
+      <div class="shortcut-row"><span class="shortcut-action">QuickMenu</span><span class="shortcut-key">手指长按画布</span></div>
+      <div class="shortcut-row"><span class="shortcut-action">复制图层内容</span><span class="shortcut-key">三指下滑</span></div>
+      <div class="shortcut-row"><span class="shortcut-action">回到图库</span><span class="shortcut-key">双指捏合缩小</span></div>
+    </div>
+
+    <div class="insight" style="border-color:var(--teal);background:rgba(45,212,191,0.06)">
+      <strong style="color:var(--teal)">第一周练习目标：</strong>不画任何「正式作品」，只练手势。每天10分钟：双指撤销100次、画直线按住等待QuickShape变完美线、三指擦除。这些肌肉记忆建立后，后续学习速度会快3倍。
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 2: FOUNDATION ═══ -->
+<section class="section" id="foundation">
+  <div class="container">
+    <div class="section-eyebrow">阶段二 · 第3–6周</div>
+    <h2 class="section-title">基础绘图技能</h2>
+    <p class="section-desc">建立线条控制、图层思维、笔刷系统三大核心能力。这三样精通了，后面所有技巧都只是组合运用。</p>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">每周练习计划（量化）</div><div class="divider-line"></div></div>
+
+    <ul class="exercise-list">
+      <li class="exercise-item">
+        <span class="ex-week">W3</span>
+        <div class="ex-body" style="flex:1">
+          <div class="ex-title" style="font-size:13px;font-weight:600;margin-bottom:4px">线条控制训练</div>
+          <div class="ex-task" style="font-size:12px;color:var(--text2)">每天画100条直线（不用QuickShape），目标：线条均匀无抖动。然后画200个圆圈，目标：起止点接合。用「技术笔」笔刷，不透明度100%。</div>
+          <div class="ex-output" style="font-size:11px;font-family:var(--mono);color:var(--text3);margin-top:5px">输出：一张充满线条练习的画布截图</div>
+        </div>
+        <div class="ex-diff" style="color:var(--green);border-color:var(--green-d);background:rgba(74,222,128,0.08);font-size:10px;padding:2px 7px;border-radius:99px;align-self:flex-start;white-space:nowrap">入门</div>
+      </li>
+      <li class="exercise-item">
+        <span class="ex-week">W4</span>
+        <div style="flex:1">
+          <div class="ex-title" style="font-size:13px;font-weight:600;margin-bottom:4px">图层系统实验</div>
+          <div class="ex-task" style="font-size:12px;color:var(--text2)">创建10个图层：线稿层、底色层、阴影层、高光层、纹理层各一组。练习图层重命名、上色不出界（Clipping Mask）、隐藏/显示图层。</div>
+          <div class="ex-output" style="font-size:11px;font-family:var(--mono);color:var(--text3);margin-top:5px">输出：展示图层结构的截图</div>
+        </div>
+        <div class="ex-diff" style="color:var(--green);border-color:var(--green-d);background:rgba(74,222,128,0.08);font-size:10px;padding:2px 7px;border-radius:99px;align-self:flex-start;white-space:nowrap">入门</div>
+      </li>
+      <li class="exercise-item">
+        <span class="ex-week">W5</span>
+        <div style="flex:1">
+          <div class="ex-title" style="font-size:13px;font-weight:600;margin-bottom:4px">笔刷系统探索</div>
+          <div class="ex-task" style="font-size:12px;color:var(--text2)">用15种不同笔刷各画一个圣诞球，感受手感差异。重点体验：技术笔（硬边）、水彩（渗透）、圆刷（厚涂）、干墨（纹理）。做成一张笔刷对比表。</div>
+          <div class="ex-output" style="font-size:11px;font-family:var(--mono);color:var(--text3);margin-top:5px">输出：15种笔刷对比展示图</div>
+        </div>
+        <div class="ex-diff" style="color:var(--amber);border-color:var(--amber-d);background:rgba(251,191,36,0.08);font-size:10px;padding:2px 7px;border-radius:99px;align-self:flex-start;white-space:nowrap">基础</div>
+      </li>
+      <li class="exercise-item">
+        <span class="ex-week">W6</span>
+        <div style="flex:1">
+          <div class="ex-title" style="font-size:13px;font-weight:600;margin-bottom:4px">第一件完整作品</div>
+          <div class="ex-task" style="font-size:12px;color:var(--text2)">临摹一个圣诞球挂件（从Pinterest找参考图）。要求：轮廓层 + 底色层 + 高光层 + 阴影层，至少4个图层。颜色用传统红绿金配色。</div>
+          <div class="ex-output" style="font-size:11px;font-family:var(--mono);color:var(--text3);margin-top:5px">输出：可发布到社群的圣诞球插画</div>
+        </div>
+        <div class="ex-diff" style="color:var(--amber);border-color:var(--amber-d);background:rgba(251,191,36,0.08);font-size:10px;padding:2px 7px;border-radius:99px;align-self:flex-start;white-space:nowrap">基础</div>
+      </li>
+    </ul>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">核心笔刷分类指南</div><div class="divider-line"></div></div>
+
+    <div class="brush-grid">
+      <div class="brush-card">
+        <div class="brush-icon">✏️</div>
+        <div class="brush-name">技术笔 / 单线笔</div>
+        <div class="brush-cat" style="color:var(--purple)">素描 → 技术笔</div>
+        <div class="brush-desc">硬边清晰，适合线稿、图案轮廓。毛毡图纸的轮廓线首选。</div>
+      </div>
+      <div class="brush-card">
+        <div class="brush-icon">🎨</div>
+        <div class="brush-name">圆头硬刷</div>
+        <div class="brush-cat" style="color:var(--teal)">绘画 → 厚涂系列</div>
+        <div class="brush-desc">模拟传统颜料堆叠感，适合扁平色块和立体上色。</div>
+      </div>
+      <div class="brush-card">
+        <div class="brush-icon">💧</div>
+        <div class="brush-name">水彩渗透刷</div>
+        <div class="brush-cat" style="color:var(--blue)">绘画 → 水彩</div>
+        <div class="brush-desc">边缘自然晕染，适合刺绣配色稿的渐变效果研究。</div>
+      </div>
+      <div class="brush-card">
+        <div class="brush-icon">🪨</div>
+        <div class="brush-name">干墨 / 炭笔</div>
+        <div class="brush-cat" style="color:var(--amber)">素描 → 炭笔</div>
+        <div class="brush-desc">有纹理感，适合模拟羊毛毡的绒毛质感草图。</div>
+      </div>
+      <div class="brush-card">
+        <div class="brush-icon">⭐</div>
+        <div class="brush-name">点彩 / 喷枪</div>
+        <div class="brush-cat" style="color:var(--pink)">喷枪系列</div>
+        <div class="brush-desc">渐变阴影，适合产品展示图的光影效果。</div>
+      </div>
+      <div class="brush-card">
+        <div class="brush-icon">🔲</div>
+        <div class="brush-name">平头纹理刷</div>
+        <div class="brush-cat" style="color:var(--coral)">纹理系列</div>
+        <div class="brush-desc">模拟布料纹理，做钩织/缝纫成品的质感表现。</div>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">学习资源（基础阶段）</div><div class="divider-line"></div></div>
+
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="res-type" style="color:var(--purple)">官方 · 免费 · 第一步</div>
+        <div class="res-name">Procreate Beginners Series</div>
+        <div class="res-desc">官方出品4部曲，<a href="https://procreate.com/beginners-series" style="color:var(--purple)">procreate.com/beginners-series</a>，从界面到第一幅星际画面，最权威的起点。</div>
+        <div class="res-tags">
+          <span class="tag" style="background:rgba(167,139,250,0.15);color:var(--purple)">官方出品</span>
+          <span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">免费</span>
+          <span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">英文</span>
+        </div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--teal)">YouTube · 免费 · 最推荐</div>
+        <div class="res-name">Art with Flo</div>
+        <div class="res-desc">最受欢迎的Procreate频道，从零基础到进阶全覆盖，有免费笔刷下载，70+笔刷包免费领取。</div>
+        <div class="res-tags">
+          <span class="tag" style="background:rgba(45,212,191,0.15);color:var(--teal)">免费笔刷</span>
+          <span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">零基础</span>
+        </div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--teal)">YouTube · 免费 · 技巧速成</div>
+        <div class="res-name">Ghost Paper</div>
+        <div class="res-desc">专注Tips & Tricks，每个视频讲透一个功能：Clipping Mask、混合模式、图层管理。跳过废话直接上干货。</div>
+        <div class="res-tags">
+          <span class="tag" style="background:rgba(45,212,191,0.15);color:var(--teal)">技巧集中</span>
+          <span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">进阶友好</span>
+        </div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--teal)">YouTube · 免费 · 系统学习</div>
+        <div class="res-name">Bardot Brush (Lisa Bardot)</div>
+        <div class="res-desc">35分钟全面入门视频，覆盖笔刷、图层、遮罩所有基础，播放量百万级，口碑极佳。</div>
+        <div class="res-tags">
+          <span class="tag" style="background:rgba(45,212,191,0.15);color:var(--teal)">系统全面</span>
+          <span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">免费</span>
+        </div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--amber)">付费 · Skillshare</div>
+        <div class="res-name">Procreate: Solid Foundations (Simon Forster)</div>
+        <div class="res-desc">30年设计师出品，系统化教学从基础到专业动画，实操练习每章都有，适合有系统学习需求的人。</div>
+        <div class="res-tags">
+          <span class="tag" style="background:rgba(251,191,36,0.15);color:var(--amber)">系统课</span>
+          <span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">含动画</span>
+        </div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--blue)">参考手册</div>
+        <div class="res-name">Procreate Handbook（官方手册）</div>
+        <div class="res-desc">每个功能的官方说明文档，<a href="https://procreate.com/handbook" style="color:var(--blue)">procreate.com/handbook</a>，遇到不懂的功能就来查，比搜索YouTube快。</div>
+        <div class="res-tags">
+          <span class="tag" style="background:rgba(96,165,250,0.15);color:var(--blue)">官方文档</span>
+          <span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">随时查阅</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 3: INTERMEDIATE ═══ -->
+<section class="section" id="intermediate">
+  <div class="container">
+    <div class="section-eyebrow">阶段三 · 月2–3</div>
+    <h2 class="section-title">中阶技法精通</h2>
+    <p class="section-desc">掌握这五大技法，你就拥有了专业数字插画师90%的工具箱。每个技法配一个实际练习项目。</p>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">五大中阶技法</div><div class="divider-line"></div></div>
+
+    <div class="phase-grid">
+      <div class="phase-item" id="pi-blend">
+        <button class="phase-trigger" onclick="togglePhase('blend')">
+          <span class="phase-num">01</span>
+          <div class="phase-label">
+            <div class="phase-name">混合模式 Blend Modes</div>
+            <div class="phase-time">让颜色「聪明地」叠加，是光影效果的核心</div>
+          </div>
+          <span class="phase-badge" style="background:rgba(167,139,250,0.15);color:var(--purple)">高频使用</span>
+          <span class="phase-chevron">▼</span>
+        </button>
+        <div class="phase-body" id="pb-blend">
+          <div style="margin-top:14px">
+          <div class="layer-grid">
+            <div class="layer-card">
+              <div class="layer-name" style="color:var(--purple)">正片叠底 Multiply</div>
+              <div class="layer-use">暗部阴影，让颜色变深。画阴影时放在颜色图层上方，永远不会过头。</div>
+              <div class="layer-tip">阴影图层首选</div>
+            </div>
+            <div class="layer-card">
+              <div class="layer-name" style="color:var(--amber)">滤色 Screen</div>
+              <div class="layer-use">亮部高光，让颜色变亮。圣诞球的金属反光、雪花的发光感专用。</div>
+              <div class="layer-tip">高光/发光效果</div>
+            </div>
+            <div class="layer-card">
+              <div class="layer-name" style="color:var(--blue)">叠加 Overlay</div>
+              <div class="layer-use">同时增加对比度，暗部更暗、亮部更亮。整体提升画面饱和度和生动感。</div>
+              <div class="layer-tip">画面提色润色</div>
+            </div>
+            <div class="layer-card">
+              <div class="layer-name" style="color:var(--coral)">颜色减淡 Color Dodge</div>
+              <div class="layer-use">强烈发光效果，火焰、星星、金属高亮专用。</div>
+              <div class="layer-tip">极亮高光特效</div>
+            </div>
+            <div class="layer-card">
+              <div class="layer-name" style="color:var(--teal)">颜色 Color</div>
+              <div class="layer-use">只改变颜色不改变明暗，用于整体换色调，快速测试不同配色方案。</div>
+              <div class="layer-tip">配色实验利器</div>
+            </div>
+            <div class="layer-card">
+              <div class="layer-name" style="color:var(--pink)">柔光 Soft Light</div>
+              <div class="layer-use">温和的对比增强，不会过曝，适合给整幅画加一层「质感层」。</div>
+              <div class="layer-tip">纹理叠加</div>
+            </div>
+          </div>
+          <div class="insight" style="border-color:var(--purple);background:rgba(167,139,250,0.06);margin-top:12px">
+            <strong style="color:var(--purple)">练习项目：</strong>画一个圣诞球，只用4个图层：底色层、正片叠底阴影层、滤色高光层、颜色减淡高光点。完成后你就理解了90%的光影原理。
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-item" id="pi-mask">
+        <button class="phase-trigger" onclick="togglePhase('mask')">
+          <span class="phase-num">02</span>
+          <div class="phase-label">
+            <div class="phase-name">遮罩系统 Masks</div>
+            <div class="phase-time">不破坏原稿地修改，专业工作流的基础</div>
+          </div>
+          <span class="phase-badge" style="background:rgba(45,212,191,0.15);color:var(--teal)">必须掌握</span>
+          <span class="phase-chevron">▼</span>
+        </button>
+        <div class="phase-body" id="pb-mask">
+          <div style="margin-top:14px;display:grid;gap:10px">
+            <div class="ws">
+              <div class="ws-num" style="background:rgba(45,212,191,0.15);color:var(--teal)">①</div>
+              <div class="ws-body">
+                <div class="ws-title">剪切蒙版 Clipping Mask</div>
+                <div class="ws-desc">在图层A上方新建图层B，右侧向下箭头 → 成为A的剪切蒙版。B上画的内容只在A的形状范围内显示。<strong>超级实用：画好线稿后，所有上色图层都剪切到线稿图层，颜色永远不会画出轮廓外。</strong></div>
+                <div class="ws-tip">↗ 最高频使用的遮罩技法</div>
+              </div>
+            </div>
+            <div class="ws">
+              <div class="ws-num" style="background:rgba(251,191,36,0.15);color:var(--amber)">②</div>
+              <div class="ws-body">
+                <div class="ws-title">图层蒙版 Layer Mask</div>
+                <div class="ws-desc">给图层添加遮罩，用黑色笔刷在遮罩上涂 = 隐藏对应区域，用白色涂 = 恢复显示。非破坏性——随时可以改，原图不受损。适合需要精细边缘的复杂裁剪。</div>
+                <div class="ws-tip">↗ 非破坏性编辑核心工具</div>
+              </div>
+            </div>
+            <div class="ws">
+              <div class="ws-num" style="background:rgba(96,165,250,0.15);color:var(--blue)">③</div>
+              <div class="ws-body">
+                <div class="ws-title">Alpha锁定 Alpha Lock</div>
+                <div class="ws-desc">双指向右滑动图层缩略图启动。锁定后只能在已有像素范围内绘制——快速给形状整体换色、加纹理的利器。比剪切蒙版更快，适合简单上色修改。</div>
+                <div class="ws-tip">↗ 快速上色换色首选</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-item" id="pi-sym">
+        <button class="phase-trigger" onclick="togglePhase('sym')">
+          <span class="phase-num">03</span>
+          <div class="phase-label">
+            <div class="phase-name">对称工具 Symmetry</div>
+            <div class="phase-time">毛毡图案设计的超级加速器</div>
+          </div>
+          <span class="phase-badge" style="background:rgba(251,191,36,0.15);color:var(--amber)">手工艺必用</span>
+          <span class="phase-chevron">▼</span>
+        </button>
+        <div class="phase-body" id="pb-sym">
+          <div style="margin-top:14px">
+          <div class="workflow-steps">
+            <div class="ws">
+              <div class="ws-num" style="background:rgba(251,191,36,0.15);color:var(--amber)">1</div>
+              <div class="ws-body">
+                <div class="ws-title">开启对称：修改(S形) → 画布 → 绘图参考 → 对称</div>
+                <div class="ws-desc">四种模式：垂直（左右镜像）/ 水平（上下镜像）/ 四象限 / 放射状（雪花/曼陀罗）。</div>
+              </div>
+            </div>
+            <div class="ws">
+              <div class="ws-num" style="background:rgba(251,191,36,0.15);color:var(--amber)">2</div>
+              <div class="ws-body">
+                <div class="ws-title">放射状对称 → 雪花图案</div>
+                <div class="ws-desc">设为6点放射，画左边，右边自动镜像出现，一分钟出一个完美雪花图案。毛毡挂件图纸的核心制作方式。</div>
+              </div>
+            </div>
+            <div class="ws">
+              <div class="ws-num" style="background:rgba(251,191,36,0.15);color:var(--amber)">3</div>
+              <div class="ws-body">
+                <div class="ws-title">垂直对称 → 动物/人偶正面图</div>
+                <div class="ws-desc">画雪人/麋鹿等对称立体造型时，只需画左半边，右边自动生成，大幅减少出错率。</div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-item" id="pi-pattern">
+        <button class="phase-trigger" onclick="togglePhase('pattern')">
+          <span class="phase-num">04</span>
+          <div class="phase-label">
+            <div class="phase-name">无缝图案设计 Seamless Patterns</div>
+            <div class="phase-time">直接在Procreate制作可售卖的重复图案</div>
+          </div>
+          <span class="phase-badge" style="background:rgba(244,114,182,0.15);color:var(--pink)">商业价值高</span>
+          <span class="phase-chevron">▼</span>
+        </button>
+        <div class="phase-body" id="pb-pattern">
+          <div style="margin-top:14px">
+          <div class="workflow-steps">
+            <div class="ws">
+              <div class="ws-num" style="background:rgba(244,114,182,0.15);color:var(--pink)">1</div>
+              <div class="ws-body">
+                <div class="ws-title">设置正方形画布（建议2000×2000px）</div>
+                <div class="ws-desc">无缝图案必须用正方形。DPI设300（打印级别），如果只用于数字用途可以72dpi。</div>
+              </div>
+            </div>
+            <div class="ws">
+              <div class="ws-num" style="background:rgba(244,114,182,0.15);color:var(--pink)">2</div>
+              <div class="ws-body">
+                <div class="ws-title">开启「画布参考」，选择对称/重复模式</div>
+                <div class="ws-desc">或者用传统方法：画好元素 → 变换工具移到边缘一半 → 复制 → 移到对边，确保接缝处完美衔接。</div>
+              </div>
+            </div>
+            <div class="ws">
+              <div class="ws-num" style="background:rgba(244,114,182,0.15);color:var(--pink)">3</div>
+              <div class="ws-body">
+                <div class="ws-title">分层管理：元素层、背景层各独立</div>
+                <div class="ws-desc">方便后期快速更换背景色，测试不同配色方案而不重新画。</div>
+              </div>
+            </div>
+            <div class="ws">
+              <div class="ws-num" style="background:rgba(244,114,182,0.15);color:var(--pink)">4</div>
+              <div class="ws-body">
+                <div class="ws-title">导出PNG → Spoonflower / Adobe Illustrator转矢量</div>
+                <div class="ws-desc">Procreate是像素图，如需授权给布料印刷厂，需要转矢量。用Adobe Capture App可直接从Procreate导矢量路径。</div>
+              </div>
+            </div>
+          </div>
+          <div class="insight" style="border-color:var(--pink);background:rgba(244,114,182,0.06);margin-top:12px">
+            <strong style="color:var(--pink)">商业应用：</strong>一套圣诞主题无缝图案（雪花、麋鹿、铃铛等5–8个元素），可以用在：毛毡产品的包装纸、Etsy数字下载产品、圣诞贺卡印刷。是Procreate最直接的变现路径之一。
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-item" id="pi-export">
+        <button class="phase-trigger" onclick="togglePhase('export')">
+          <span class="phase-num">05</span>
+          <div class="phase-label">
+            <div class="phase-name">导出工作流 Export Workflow</div>
+            <div class="phase-time">不同用途选择正确导出格式</div>
+          </div>
+          <span class="phase-badge" style="background:rgba(96,165,250,0.15);color:var(--blue)">商业必知</span>
+          <span class="phase-chevron">▼</span>
+        </button>
+        <div class="phase-body" id="pb-export">
+          <div style="margin-top:14px">
+          <table class="tools-table">
+            <thead><tr><th>用途</th><th>格式</th><th>设置</th><th>备注</th></tr></thead>
+            <tbody>
+              <tr><td>亚马逊产品主图</td><td>JPEG</td><td>300dpi / sRGB</td><td>1000×1000px以上，文件不超过10MB</td></tr>
+              <tr><td>社群内容图（IG/TikTok）</td><td>PNG</td><td>72dpi / sRGB</td><td>PNG保留透明背景，可叠加在产品场景上</td></tr>
+              <tr><td>PDF型纸（钩织/刺绣）</td><td>PDF</td><td>多页Stack导出</td><td>在Procreate创建图层Stack，整体导出为PDF</td></tr>
+              <tr><td>打印（实体产品）</td><td>PNG/TIFF</td><td>300dpi / CMYK</td><td>Procreate导出后需在Photoshop转CMYK确认颜色</td></tr>
+              <tr><td>过程视频（内容营销）</td><td>延时摄影MP4</td><td>自动生成</td><td>每次创作自动录制，分享给潜在客户建立信任感</td></tr>
+              <tr><td>原始文件备份</td><td>.procreate</td><td>原生格式</td><td>保留所有图层，定期AirDrop备份到电脑</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 4: ADVANCED / ORIGINAL DESIGN ═══ -->
+<section class="section" id="advanced">
+  <div class="container">
+    <div class="section-eyebrow">阶段四 · 月3–6</div>
+    <h2 class="section-title">走向自主设计</h2>
+    <p class="section-desc">从「临摹复制」到「原创输出」的最关键转变。这不只是技术问题，更是设计思维的建立过程。</p>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">原创设计工作流（6步法）</div><div class="divider-line"></div></div>
+
+    <div class="workflow-steps">
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(167,139,250,0.2);color:var(--purple)">1</div>
+        <div class="ws-body">
+          <div class="ws-title">灵感收集 — Pinterest Board</div>
+          <div class="ws-desc">每周建一个主题灵感板：「北欧圣诞」「日本民艺」「70年代配色」「苔藓植物」——任何让你有感觉的视觉主题。不是抄，是训练你的视觉语言库。在Procreate里新建画布，截图参考图贴进来，旁边写下「我喜欢这里的XXX」。</div>
+          <div class="ws-tip">量化目标：每月至少5个主题灵感板，每板20–30张图</div>
+        </div>
+      </div>
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(45,212,191,0.2);color:var(--teal)">2</div>
+        <div class="ws-body">
+          <div class="ws-title">关键词提炼 — 把感觉变成词</div>
+          <div class="ws-desc">从灵感板中提炼3个形容词，例如「温暖 · 手感 · 北欧」。这3个词是你这件作品的设计关键词，所有决策（配色/笔触/构图）都回来问：「这个选择符合这3个词吗？」</div>
+          <div class="ws-tip">这是把「我觉得好看」变成「我知道为什么好看」的转化点</div>
+        </div>
+      </div>
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(251,191,36,0.2);color:var(--amber)">3</div>
+        <div class="ws-body">
+          <div class="ws-title">缩略草图 — 快速概念发散</div>
+          <div class="ws-desc">新建一张512×512px的小画布，5分钟内画出5个不同的构图草图（缩略图级别，不要细化）。选其中一个继续。速度是关键——小画布强迫你只关注大形状和构图，不在细节上纠结。</div>
+          <div class="ws-tip">职业插画师的黄金法则：先数量，再质量</div>
+        </div>
+      </div>
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(244,114,182,0.2);color:var(--pink)">4</div>
+        <div class="ws-body">
+          <div class="ws-title">线稿 — 结构与比例</div>
+          <div class="ws-desc">新建正式画布（3000×3000px），在最底层画线稿。线稿图层透明度降到30–40%，在上方新建「上色」图层组。技巧：用对称工具画对称图形，用QuickShape画完美几何形状（画完后按住）。</div>
+          <div class="ws-tip">线稿不需要完美，但比例要对</div>
+        </div>
+      </div>
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(96,165,250,0.2);color:var(--blue)">5</div>
+        <div class="ws-body">
+          <div class="ws-title">配色实验 — 在数字端就测试</div>
+          <div class="ws-desc">底色填好后，新建「配色测试」图层，用「颜色」混合模式整体改变色调，快速测试3–5个配色方案，截图对比选最好的。比买羊毛试配色便宜100倍，这是Procreate最大价值之一。</div>
+          <div class="ws-tip">先数字定色，再买实体材料——省钱法则</div>
+        </div>
+      </div>
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(74,222,128,0.2);color:var(--green)">6</div>
+        <div class="ws-body">
+          <div class="ws-title">转化为实体图纸 — Procreate → 手工</div>
+          <div class="ws-desc">导出PNG → 用AirPrint打印到A4纸，或直接在iPad屏幕上描摹（用手势锁屏，防止误触）。毛毡作品：打印轮廓图，对照着戳针。刺绣：打印稿放在布料下用透光桌描图。钩织：在Procreate标注针数圈数，导出PDF图纸。</div>
+          <div class="ws-tip">数字 ↔ 实体的桥梁，Procreate是你的「数字打样台」</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight" style="border-color:var(--green);background:rgba(74,222,128,0.06)">
+      <strong style="color:var(--green)">走向原创的核心转变：</strong>临摹教你「怎么做」，自主设计要你决定「做什么」。最快的训练方法是「主题限制法」——给自己一个限制（只用3种颜色 / 只画圆形 / 只用一种笔刷），在约束内创作。限制越多，创意往往越丰富。
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 5: COLOR SYSTEM ═══ -->
+<section class="section" id="color">
+  <div class="container">
+    <div class="section-eyebrow">配色设计系统</div>
+    <h2 class="section-title">Procreate 配色完全指南</h2>
+    <p class="section-desc">配色是手工艺产品销量最直接的影响因素。在Procreate里先做配色实验，再买材料——这是最聪明的工作流。</p>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">Procreate 色彩工具使用</div><div class="divider-line"></div></div>
+
+    <div class="workflow-steps" style="margin-bottom:2rem">
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(167,139,250,0.15);color:var(--purple)">🎨</div>
+        <div class="ws-body">
+          <div class="ws-title">色盘 (Color Disc) — 色相 + 饱和度 + 明度三维控制</div>
+          <div class="ws-desc">外圈选色相，内圈调饱和度和明度。点右上角颜色图标进入。技巧：先在外圈选大方向色相，再在内圈的左下角区域选「低饱和度暗色」（阴影用），右上角选「高饱和度亮色」（亮部用）。</div>
+        </div>
+      </div>
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(45,212,191,0.15);color:var(--teal)">📦</div>
+        <div class="ws-body">
+          <div class="ws-title">调色板 Palettes — 保存你的专属色系</div>
+          <div class="ws-desc">颜色面板下方 → 调色板 → 新建。建议为每个产品系列建一个调色板：「圣诞经典」「北欧系」「奢华金」各存5–7个颜色。可以从照片提取颜色：点「+」→ 从照片，从竞品图或自然场景里提取配色。</div>
+        </div>
+      </div>
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(251,191,36,0.15);color:var(--amber)">🔢</div>
+        <div class="ws-body">
+          <div class="ws-title">HEX值输入 — 精确颜色控制</div>
+          <div class="ws-desc">颜色面板右上角点「HEX」标签，可以直接输入HEX色码。用Coolors.co生成配色方案 → 复制HEX码 → 粘贴到Procreate，精确实现设计配色。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">手工艺产品专用配色系统（含HEX）</div><div class="divider-line"></div></div>
+
+    <div class="palette-grid">
+      <!-- Palette 1 -->
+      <div class="palette-card">
+        <div class="pal-info">
+          <div class="pal-name">经典圣诞 · Classic</div>
+          <div class="pal-desc">最高销量，覆盖最广受众。情感记忆最强的组合，新手首选。</div>
+          <div class="pal-use">适用：毛毡圣诞球 / 雪人 / 麋鹿 / 经典礼盒套装</div>
+        </div>
+        <div class="pal-swatches">
+          <div class="swatch-w"><div class="sw" style="width:32px;height:32px;background:#8B0000"></div><div class="sw-code">#8B0000</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:40px;background:#C0392B"></div><div class="sw-code">#C0392B</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:36px;background:#1B5E20"></div><div class="sw-code">#1B5E20</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:32px;background:#B8860B"></div><div class="sw-code">#B8860B</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:28px;background:#F5F5DC"></div><div class="sw-code">#F5F5DC</div></div>
+        </div>
+      </div>
+      <!-- Palette 2 -->
+      <div class="palette-card">
+        <div class="pal-info">
+          <div class="pal-name">北欧自然 · Nordic</div>
+          <div class="pal-desc">2025趋势色系。Earthy tones降低饱和度，适合中高端定位，差异化竞争。</div>
+          <div class="pal-use">适用：北欧风装饰 / 天然植物染系列 / 礼品套组</div>
+        </div>
+        <div class="pal-swatches">
+          <div class="swatch-w"><div class="sw" style="width:32px;height:32px;background:#7B9E87"></div><div class="sw-code">#7B9E87</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:40px;background:#C46B3C"></div><div class="sw-code">#C46B3C</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:36px;background:#F5F0E8"></div><div class="sw-code">#F5F0E8</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:32px;background:#8B7355"></div><div class="sw-code">#8B7355</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:28px;background:#4A7B5C"></div><div class="sw-code">#4A7B5C</div></div>
+        </div>
+      </div>
+      <!-- Palette 3 -->
+      <div class="palette-card">
+        <div class="pal-info">
+          <div class="pal-name">奢华金 · Luxury</div>
+          <div class="pal-desc">高客单价定位。酒红+祖母绿+香槟金，高端礼品感强，可提升30%溢价空间。</div>
+          <div class="pal-use">适用：高端礼盒 / 宠物肖像 / 圣诞村场景组合</div>
+        </div>
+        <div class="pal-swatches">
+          <div class="swatch-w"><div class="sw" style="width:32px;height:32px;background:#610110"></div><div class="sw-code">#610110</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:40px;background:#1A3D2B"></div><div class="sw-code">#1A3D2B</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:36px;background:#CFB53B"></div><div class="sw-code">#CFB53B</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:32px;background:#F7CF7C"></div><div class="sw-code">#F7CF7C</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:28px;background:#1C1C1C"></div><div class="sw-code">#1C1C1C</div></div>
+        </div>
+      </div>
+      <!-- Palette 4 -->
+      <div class="palette-card">
+        <div class="pal-info">
+          <div class="pal-name">现代粉嫩 · Pastel</div>
+          <div class="pal-desc">差异化方向，竞争较小。吸引年轻买家，「非传统圣诞」定位，拍照出片极好。</div>
+          <div class="pal-use">适用：圣诞礼物盒装饰 / 桌面摆件 / 年轻女性礼品</div>
+        </div>
+        <div class="pal-swatches">
+          <div class="swatch-w"><div class="sw" style="width:32px;height:32px;background:#E8A0B4"></div><div class="sw-code">#E8A0B4</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:40px;background:#B5C7D3"></div><div class="sw-code">#B5C7D3</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:36px;background:#C9B8E8"></div><div class="sw-code">#C9B8E8</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:32px;background:#E8C8A0"></div><div class="sw-code">#E8C8A0</div></div>
+          <div class="swatch-w"><div class="sw" style="width:32px;height:28px;background:#F5F0F0"></div><div class="sw-code">#F5F0F0</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">色彩理论速查（设计师必知）</div><div class="divider-line"></div></div>
+
+    <div class="layer-grid">
+      <div class="layer-card"><div class="layer-name" style="color:var(--purple)">互补色</div><div class="layer-use">色轮对面的颜色（红 vs 绿）。最强烈对比，圣诞经典配色的底层逻辑。</div></div>
+      <div class="layer-card"><div class="layer-name" style="color:var(--teal)">类似色</div><div class="layer-use">色轮相邻的颜色（红-橙-黄）。柔和和谐，北欧风配色常用。</div></div>
+      <div class="layer-card"><div class="layer-name" style="color:var(--amber)">60-30-10法则</div><div class="layer-use">主色60% · 辅色30% · 点缀10%。超过3种主色必乱。</div></div>
+      <div class="layer-card"><div class="layer-name" style="color:var(--blue)">色温</div><div class="layer-use">暖色（红/橙/黄）= 前进感/热闹。冷色（蓝/绿/紫）= 退后感/平静。</div></div>
+      <div class="layer-card"><div class="layer-name" style="color:var(--pink)">饱和度对比</div><div class="layer-use">高饱和色 + 低饱和色对比。让主角「跳」出来的关键。</div></div>
+      <div class="layer-card"><div class="layer-name" style="color:var(--coral)">明度对比</div><div class="layer-use">明暗差异决定立体感。没有明度对比 = 平面，有明度对比 = 立体。</div></div>
+    </div>
+
+    <div class="insight" style="border-color:var(--amber);background:rgba(251,191,36,0.06)">
+      <strong style="color:var(--amber)">Procreate 配色实验法：</strong>画好一件作品底稿后，复制画布5次，每次用「选色」混合模式图层覆盖，快速测试5套配色方案，30分钟内完成所有方案对比，选最好的再精修。这个方法可以帮你避免「买了材料才发现配色不好看」的损失。
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 6: CRAFT INTEGRATION ═══ -->
+<section class="section" id="craft">
+  <div class="container">
+    <div class="section-eyebrow">手工艺整合工作流</div>
+    <h2 class="section-title">Procreate × 四大手工艺</h2>
+    <p class="section-desc">Procreate不只是画画工具，它是你的「数字设计中台」，连接所有手工艺技艺的前端设计环节。</p>
+
+    <div class="craft-cards">
+      <div class="craft-card">
+        <div class="craft-head" style="background:rgba(251,191,36,0.08)">
+          <div class="craft-title" style="color:var(--amber)">Procreate × 羊毛毡</div>
+          <div class="craft-subtitle">图纸设计 · 配色预判 · 比例确认</div>
+        </div>
+        <div class="craft-steps">
+          <div class="craft-step"><div class="cs-arrow">→</div><div>在Procreate用对称工具画雪花/麋鹿<strong>轮廓图</strong>，标注各色区</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>用色块填充测试3套<strong>羊毛配色方案</strong>，选最好的再买材料</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>打印1:1尺寸轮廓图，作为<strong>戳针参考稿</strong>（垫在下面描形）</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>完成品拍照导回Procreate，做产品<strong>展示图合成</strong>（加背景/文字）</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>延时摄影视频 → 剪辑 → Instagram Reels<strong>内容营销</strong></div></div>
+        </div>
+      </div>
+      <div class="craft-card">
+        <div class="craft-head" style="background:rgba(244,114,182,0.08)">
+          <div class="craft-title" style="color:var(--pink)">Procreate × 钩织</div>
+          <div class="craft-subtitle">图案设计 · PDF型纸 · 封面制作</div>
+        </div>
+        <div class="craft-steps">
+          <div class="craft-step"><div class="cs-arrow">→</div><div>在Procreate画<strong>钩织符号图</strong>（短针×、长针T等），比手绘清晰</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>用网格参考线辅助，确保<strong>针数圈数</strong>标注准确</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>导出多页<strong>PDF型纸</strong>（图纸页+说明页+成品图页）</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>在Procreate设计Etsy PDF型纸的<strong>封面和预览图</strong></div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>用无缝图案功能设计<strong>圣诞主题钩织花样</strong>参考图</div></div>
+        </div>
+      </div>
+      <div class="craft-card">
+        <div class="craft-head" style="background:rgba(45,212,191,0.08)">
+          <div class="craft-title" style="color:var(--teal)">Procreate × 缝纫</div>
+          <div class="craft-subtitle">版型设计 · 印花图案 · 面料配色</div>
+        </div>
+        <div class="craft-steps">
+          <div class="craft-step"><div class="cs-arrow">→</div><div>用Procreate设计<strong>圣诞袜/挂旗图案</strong>，测试不同面料花色</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>在Procreate标注<strong>缝份、对位记号</strong>，打印出纸样</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>设计<strong>无缝印花图案</strong>，发给Spoonflower定制面料</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>制作产品<strong>标签/吊牌设计</strong>，打印后剪裁附于成品</div></div>
+        </div>
+      </div>
+      <div class="craft-card">
+        <div class="craft-head" style="background:rgba(96,165,250,0.08)">
+          <div class="craft-title" style="color:var(--blue)">Procreate × 刺绣</div>
+          <div class="craft-subtitle">图稿设计 · 配色研究 · PDF图纸销售</div>
+        </div>
+        <div class="craft-steps">
+          <div class="craft-step"><div class="cs-arrow">→</div><div>在Procreate画<strong>刺绣线稿</strong>，标注针法和绣线颜色</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>用不同颜色图层模拟<strong>绣线配色效果</strong>，数字预判省时省线</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>图稿打印 → 放布料下用<strong>透光桌</strong>描图，或直接对iPad描</div></div>
+          <div class="craft-step"><div class="cs-arrow">→</div><div>制作<strong>刺绣PDF图纸</strong>（线稿+配色方案+针法说明）在Etsy销售</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">产品图制作工作流（亚马逊/Etsy适用）</div><div class="divider-line"></div></div>
+
+    <div class="workflow-steps">
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(167,139,250,0.15);color:var(--purple)">📸</div>
+        <div class="ws-body">
+          <div class="ws-title">步骤1：拍摄原始产品照</div>
+          <div class="ws-desc">自然光侧光，米色/白色背景，保持1000px以上清晰度。不需要专业相机，iPhone + 自然光就够。</div>
+        </div>
+      </div>
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(45,212,191,0.15);color:var(--teal)">✂️</div>
+        <div class="ws-body">
+          <div class="ws-title">步骤2：导入Procreate → 去背景</div>
+          <div class="ws-desc">使用「选取 → 自动」点击背景区域，删除背景。或者用「快速选择」精细抠图。导出PNG透明背景。</div>
+        </div>
+      </div>
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(251,191,36,0.15);color:var(--amber)">🖼</div>
+        <div class="ws-body">
+          <div class="ws-title">步骤3：合成场景图</div>
+          <div class="ws-desc">新建画布，底层放背景（松枝纹理/木板纹理/牛皮纸），中层放产品，上层加文字/品牌标志。一个产品可以快速出3–5张不同风格场景图。</div>
+        </div>
+      </div>
+      <div class="ws">
+        <div class="ws-num" style="background:rgba(244,114,182,0.15);color:var(--pink)">📊</div>
+        <div class="ws-body">
+          <div class="ws-title">步骤4：信息图 Infographic</div>
+          <div class="ws-desc">用Procreate制作「材质说明」「尺寸标注」「套组内容物」等信息图，直接提升转化率。文字用简洁无衬线字体，配色与产品一致。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RESOURCES ═══ -->
+<section class="section" id="resources">
+  <div class="container">
+    <div class="section-eyebrow">资源库</div>
+    <h2 class="section-title">精选学习资源全集</h2>
+    <p class="section-desc">按学习阶段分类，只选有价值的。每个资源都是经过实际验证的推荐。</p>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">免费资源（先把这些用完）</div><div class="divider-line"></div></div>
+
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="res-type" style="color:var(--purple)">官方 · 必看</div>
+        <div class="res-name">Procreate Beginners Series</div>
+        <div class="res-desc"><a href="https://procreate.com/beginners-series" style="color:var(--purple)">procreate.com/beginners-series</a> — 官方4部曲，免费，从零到第一幅画。官方出品质量有保证。</div>
+        <div class="res-tags"><span class="tag" style="background:rgba(167,139,250,0.15);color:var(--purple)">零基础</span><span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">英文</span></div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--teal)">YouTube · 最推荐</div>
+        <div class="res-name">Art with Flo</div>
+        <div class="res-desc">最受欢迎的Procreate频道，涵盖零基础到进阶，附免费笔刷包70+支。有系列「You Can Draw This」从一个物体到完整作品教学。</div>
+        <div class="res-tags"><span class="tag" style="background:rgba(45,212,191,0.15);color:var(--teal)">免费笔刷</span><span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">零基础</span></div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--teal)">YouTube · 技巧专攻</div>
+        <div class="res-name">Ghost Paper</div>
+        <div class="res-desc">Tips & Tricks专频，每视频讲透一个功能（Clipping Mask/混合模式/图层管理），节奏快效率高。「Top 10 Features for Beginners」是必看起点。</div>
+        <div class="res-tags"><span class="tag" style="background:rgba(45,212,191,0.15);color:var(--teal)">技巧高效</span><span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">基础入门</span></div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--teal)">YouTube · 全面系统</div>
+        <div class="res-name">Bardot Brush (Lisa Bardot)</div>
+        <div class="res-desc">35分钟全面入门，笔刷/图层/遮罩/无缝图案全覆盖。「How to Make Repeating Patterns」是做手工品图案的必看教程。</div>
+        <div class="res-tags"><span class="tag" style="background:rgba(45,212,191,0.15);color:var(--teal)">图案设计</span><span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">免费</span></div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--teal)">YouTube · 艺术思维</div>
+        <div class="res-name">Mikko (Digital Art)</div>
+        <div class="res-desc">不只教「怎么画」，教「怎么思考」。覆盖色彩理论、构图、透视、如何看参考图。适合从临摹走向原创的阶段。</div>
+        <div class="res-tags"><span class="tag" style="background:rgba(45,212,191,0.15);color:var(--teal)">设计思维</span><span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">中阶</span></div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--blue)">文档参考</div>
+        <div class="res-name">Procreate Handbook</div>
+        <div class="res-desc">官方功能说明文档，<a href="https://procreate.com/handbook" style="color:var(--blue)">procreate.com/handbook</a>，遇到任何不熟悉的功能就来查，比搜索YouTube更快准。</div>
+        <div class="res-tags"><span class="tag" style="background:rgba(96,165,250,0.15);color:var(--blue)">工具书</span><span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">随时查阅</span></div>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">付费资源（有预算时的进阶选择）</div><div class="divider-line"></div></div>
+
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="res-type" style="color:var(--amber)">Skillshare · 系统课</div>
+        <div class="res-name">Procreate: Solid Foundations</div>
+        <div class="res-desc">30年设计师Simon Forster出品，覆盖Procreate全功能到专业动画，实操练习完整，是目前最系统的Procreate付费课。</div>
+        <div class="res-tags"><span class="tag" style="background:rgba(251,191,36,0.15);color:var(--amber)">最系统</span><span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">含动画</span></div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--amber)">独立课程 · 图案设计</div>
+        <div class="res-name">Seamless Patterns in Procreate (CatCoq)</div>
+        <div class="res-desc">专注可销售的重复图案制作，从绘制到商业授权全流程，适合想在Spoonflower/Etsy卖数字图案的创作者。</div>
+        <div class="res-tags"><span class="tag" style="background:rgba(251,191,36,0.15);color:var(--amber)">商业导向</span><span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">图案专项</span></div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--amber)">Domestika · 中文字幕</div>
+        <div class="res-name">Procreate系列插画课</div>
+        <div class="res-desc">多位知名插画师开课，有中文字幕，适合中文学习者。Sarah K. Benning的植物刺绣配色课是手工艺设计师专属推荐。</div>
+        <div class="res-tags"><span class="tag" style="background:rgba(251,191,36,0.15);color:var(--amber)">中文字幕</span><span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3)">刺绣设计</span></div>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">免费笔刷资源</div><div class="divider-line"></div></div>
+
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="res-type" style="color:var(--purple)">免费 · 70+支</div>
+        <div class="res-name">Art with Flo 笔刷包</div>
+        <div class="res-desc">网站注册即可免费下载70+支Procreate笔刷，涵盖水彩/厚涂/线条/纹理。手工艺插画常用类型齐全。</div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--purple)">免费 · Paperlike合作</div>
+        <div class="res-name">Paperlike 独家笔刷集</div>
+        <div class="res-desc">全球艺术家联名免费笔刷，风格多元，<a href="https://paperlike.com" style="color:var(--purple)">paperlike.com</a> 下载，水彩/素描/纹理类尤为适合手工艺风格。</div>
+      </div>
+      <div class="res-card">
+        <div class="res-type" style="color:var(--purple)">付费 · Creative Market</div>
+        <div class="res-name">手工艺专用笔刷包</div>
+        <div class="res-desc">搜索「wool texture brush」「embroidery procreate」，有专门模拟毛线/刺绣质感的笔刷，提升手工品数字插画的真实感。</div>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">配套设计工具</div><div class="divider-line"></div></div>
+
+    <table class="tools-table">
+      <thead><tr><th>工具</th><th>用途</th><th>价格</th><th>与Procreate的配合</th></tr></thead>
+      <tbody>
+        <tr><td>Coolors.co</td><td>调色板生成，随机或指定色相</td><td>免费/付费</td><td>生成HEX值 → 直接粘贴到Procreate颜色输入框</td></tr>
+        <tr><td>Adobe Color</td><td>色轮工具，互补色/类似色一键生成</td><td>免费</td><td>导出调色板，在Procreate手动输入</td></tr>
+        <tr><td>Adobe Capture</td><td>从照片提取颜色/形状/字体</td><td>免费</td><td>可直接同步调色板到Procreate（CC账号）</td></tr>
+        <tr><td>Pinterest</td><td>视觉灵感收集</td><td>免费</td><td>截图导入Procreate参考图层</td></tr>
+        <tr><td>Canva</td><td>产品展示图排版（有模板）</td><td>免费/付费</td><td>Procreate导出PNG → 导入Canva加文字排版</td></tr>
+        <tr><td>Procreate Pocket (iPhone)</td><td>随时记录灵感草图</td><td>NT$120买断</td><td>与iPad Procreate格式完全兼容</td></tr>
+      </tbody>
+    </table>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">上架前产品图检查清单</div><div class="divider-line"></div></div>
+
+    <ul class="checklist" id="upload-checklist">
+      <li class="cl-item" onclick="toggleCL(this,0)"><div class="cl-box">✓</div>主图：白/米色背景，产品居中，1000×1000px以上</li>
+      <li class="cl-item" onclick="toggleCL(this,1)"><div class="cl-box">✓</div>场景图×3：圣诞树旁 / 礼品盒中 / 壁炉边（在Procreate合成）</li>
+      <li class="cl-item" onclick="toggleCL(this,2)"><div class="cl-box">✓</div>细节特写图×1：显示手工质感和材料细节</li>
+      <li class="cl-item" onclick="toggleCL(this,3)"><div class="cl-box">✓</div>信息图×1：标注尺寸、材料、套组内容</li>
+      <li class="cl-item" onclick="toggleCL(this,4)"><div class="cl-box">✓</div>所有图片色调统一（用Procreate同一套色温和亮度处理）</li>
+      <li class="cl-item" onclick="toggleCL(this,5)"><div class="cl-box">✓</div>延时摄影视频已导出（用于社群内容/Etsy视频展示）</li>
+      <li class="cl-item" onclick="toggleCL(this,6)"><div class="cl-box">✓</div>产品图分辨率300dpi（打印级别）或72dpi（数字展示）</li>
+      <li class="cl-item" onclick="toggleCL(this,7)"><div class="cl-box">✓</div>文件备份：.procreate原始文件已AirDrop到电脑</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  Procreate 精通指南 · 手工艺设计师专属 · 2025版<br>
+  进度数据存储于本地浏览器 · 建议书签收藏持续使用
+</footer>
+
+<script>
+// ── Progress Bar
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progress-line').style.width = (window.scrollY / h * 100) + '%';
+});
+
+// ── Nav active
+const navLinks = document.querySelectorAll('nav a');
+const sectionEls = document.querySelectorAll('section.section, .tracker-section, .hero');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sectionEls.forEach(el => { if (window.scrollY >= el.offsetTop - 120) cur = el.id; });
+  navLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#'+cur); });
+});
+
+// ── Tracker milestones
+const colors = { setup:'#a78bfa', foundation:'#2dd4bf', intermediate:'#fbbf24', design:'#f472b6', color:'#60a5fa', brand:'#fb7185' };
+const levels = ['未开始','入门','基础','进阶','熟练','精通'];
+const msCount = { setup:4, foundation:5, intermediate:5, design:5, color:4, brand:4 };
+
+function tick(skill, idx) {
+  const key = 'pcr_' + skill;
+  const data = JSON.parse(localStorage.getItem(key) || '[]');
+  while (data.length <= idx) data.push(false);
+  data[idx] = !data[idx];
+  localStorage.setItem(key, JSON.stringify(data));
+  renderTracker(skill, data);
+}
+
+function renderTracker(skill, data) {
+  const total = msCount[skill];
+  const done = data.filter(Boolean).length;
+  const pct = Math.round(done / total * 100);
+  document.getElementById('fill-' + skill).style.width = pct + '%';
+  document.getElementById('pct-' + skill).textContent = pct + '%';
+  const dots = document.getElementById('ms-' + skill).children;
+  for (let i = 0; i < dots.length; i++) {
+    dots[i].classList.toggle('done', !!data[i]);
+    dots[i].style.background = data[i] ? colors[skill] + '33' : '';
+    dots[i].style.borderColor = data[i] ? colors[skill] : '';
+    dots[i].style.color = data[i] ? colors[skill] : '';
+  }
+}
+
+function loadTrackers() {
+  Object.keys(msCount).forEach(skill => {
+    const data = JSON.parse(localStorage.getItem('pcr_' + skill) || '[]');
+    renderTracker(skill, data);
+  });
+}
+loadTrackers();
+
+// ── Phase accordion
+function togglePhase(id) {
+  const item = document.getElementById('pi-' + id);
+  const body = document.getElementById('pb-' + id);
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.phase-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.phase-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) { body.classList.add('open'); item.classList.add('open'); }
+}
+
+// ── Checklist
+function toggleCL(el, idx) {
+  el.classList.toggle('done');
+  localStorage.setItem('pcr_cl_' + idx, el.classList.contains('done'));
+}
+document.querySelectorAll('#upload-checklist .cl-item').forEach((li, i) => {
+  if (localStorage.getItem('pcr_cl_' + i) === 'true') li.classList.add('done');
+});
+
+// ── Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
